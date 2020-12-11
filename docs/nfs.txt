@@ -1,0 +1,13 @@
+echo 'net-fs/nfs-utils kerberos libmount nfsdcld nfsidmap nfsv4 nfsv41 uuid' > /etc/portage/package.use/nfs-utils
+echo 'net-libs/libtirpc kerberos' >> /etc/portage/package.use/nfs-utils
+emerge nfs-utils
+
+
+#Enable mapping
+echo N > /sys/module/nfs/parameters/nfs4_disable_idmapping
+echo "options nfs nfs4_disable_idmapping=N" > /etc/modprobe.d/nfs.conf
+
+echo N > /sys/module/nfsd/parameters/nfs4_disable_idmapping
+echo "options nfsd nfs4_disable_idmapping=N" > /etc/modprobe.d/nfsd.conf
+
+nfsidmap -cS

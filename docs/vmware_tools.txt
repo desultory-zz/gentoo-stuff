@@ -1,0 +1,35 @@
+[logging]
+log = false
+vmtoolsd.level = none
+vmsvc.level = none
+vmusr.level = none
+vmresset.level = none
+toolboxcmd.level = none
+hgfsServer.level = none
+vmbackup.level = none
+vmvss.level = none
+
+[powerops]
+
+[guestinfo]
+primary-nics=*
+exclude-nics=lo
+
+[unity]
+
+[resolutionKMS]
+
+[guestosinfo]
+# Override the short OS name sent by tools.
+short-name=Linux
+# Override the long OS name sent by tools.
+long-name=Other 4.x or later Linux (64-bit)
+
+[vmbackup]
+
+enableSyncDriver=true
+excludedFileSystems= /sys/*,/proc/*,/dev/*,/tmp/*,/run/*
+
+[guestoperations]
+
+[autoupgrade]

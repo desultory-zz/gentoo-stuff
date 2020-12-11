@@ -1,0 +1,28 @@
+module apache_custom 1.0;
+#selinux policy allowing apache and thelounge IRC
+
+require {
+    type initrc_t;
+    type node_t;
+    type cslistener_port_t;
+    type usr_t;
+    type zero_device_t;
+    type console_device_t;
+    type httpd_t;
+    type udevadm_t;
+    type init_t;
+
+    class tcp_socket {node_bind name_bind};
+    class process {execmem};
+    class file { execute execute_no_trans};
+    class chr_file {map read write};
+    class fd {use};
+}
+
+allow initrc_t cslistener_port_t:tcp_socket {name_bind};
+allow initrc_t node_t:tcp_socket {node_bind};
+allow initrc_t self:process {execmem};
+allow initrc_t usr_t:file {execute execute_no_trans};
+allow httpd_t zero_device_t:chr_file {map};
+allow udevadm_t console_device_t:chr_file {read write};
+allow udevadm_t init_t:fd {use};

@@ -1,0 +1,15 @@
+module ssh_custom 1.0;
+#policy for ssh server
+
+require {
+	type sshd_t;
+	type var_log_t;
+	type run_init_t;
+	type init_t;
+	
+	class file {getattr lock open read write};
+	class dir {search};
+}
+
+allow sshd_t var_log_t:file { getattr lock open read write };
+allow run_init_t init_t:dir search;

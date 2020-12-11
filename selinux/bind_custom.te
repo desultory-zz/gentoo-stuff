@@ -1,0 +1,29 @@
+module bind_custom 1.1;
+#selinux polciy for bind and dnscrypt
+
+require {
+    type kernel_t;
+    type named_t;
+    type var_t;
+    type initrc_t;
+    type dns_port_t;
+    type node_t;
+    type resolvconf_t;
+    type initrc_runtime_t;
+
+    class system {module_request};
+    class dir {add_name remove_name write create getattr open read rmdir search write};
+    class file {create getattr open read rename unlink write ioctl};
+    class tcp_socket {name_bind node_bind};
+    class udp_socket {name_bind};
+}
+
+allow named_t kernel_t:system {module_request};
+allow named_t var_t:dir {add_name remove_name write};
+allow named_t var_t:file {create getattr open read rename unlink write};
+allow initrc_t dns_port_t:tcp_socket {name_bind};
+allow initrc_t dns_port_t:udp_socket {name_bind};
+allow initrc_t node_t:tcp_socket {node_bind};
+allow initrc_t var_t:file {create write open read rename unlink};
+allow resolvconf_t initrc_runtime_t:dir { add_name create getattr open read remove_name rmdir search write};
+allow resolvconf_t initrc_runtime_t:file { create getattr ioctl open read unlink write};

@@ -1,0 +1,22 @@
+#fix selinux
+FEATURES="-selinux" emerge -1 selinux-base
+nano /etc/selinux/config
+FEATURES="-selinux -sesandbox" emerge -1 selinux-base
+FEATURES="-selinux -sesandbox" emerge selinux-base-policy
+emerge -uDN @world
+
+reboot
+
+mkdir /mnt/gentoo 
+mount -o bind / /mnt/gentoo
+setfiles -r /mnt/gentoo /etc/selinux/strict/contexts/files/file_contexts /mnt/gentoo/{dev,home,proc,run,sys,tmp} 
+umount /mnt/gentoo
+rlpkg -rav
+
+
+#make custom selinux module
+audit2allow -am {name} > {name}.te
+#edit the te file now
+checkmodule -M -m -o {name}.mod {name}.te
+semodule_package -o {name}.pp -m {name}.mod
+semodule -i {name}.pp

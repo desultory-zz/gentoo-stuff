@@ -1,0 +1,6 @@
+#  /etc/ntp.conf
+
+server {Server_ip}
+driftfile       /var/lib/ntp/ntp.drift
+restrict default nomodify nopeer noquery limited kod
+restrict 127.0.0.1

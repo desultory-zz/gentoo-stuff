@@ -1,0 +1,133 @@
+module base_custom 2.1;
+#basic policy for minimal gentoo systems running initrc
+
+require {
+    type staff_sudo_t;
+    type staff_t;
+
+    type kernel_t;
+    type kmod_t;
+
+    type locale_t;
+    type mount_t;
+    type udev_t;
+    type init_t;
+    type node_t;
+    type proc_t;
+    type initrc_t;
+    type udev_runtime_t;
+    type udev_rules_t;
+    type dmesg_t;
+    type device_t;
+    type lvm_t;
+    type console_device_t;
+    type systemd_hwdb_t;
+    type getty_t;
+    type getty_runtime_t;
+    type initrc_runtime_t;
+
+    type tmpfiles_t;
+    type tmpfs_t;
+    type var_t;
+    type nsfs_t;
+    type etc_t;
+    type portage_tmp_t;
+    type initrc_tmp_t;
+    type initrc_state_t;
+
+    type dhcpc_t;
+    type dhcpc_script_t;
+    type resolvconf_t;
+    type resolvconf_conf_t;
+    type ssh_keygen_t;
+
+    type logrotate_t;
+    type var_lib_t;
+    type system_cronjob_t;
+    type system_cron_spool_t;
+    type system_cronjob_tmp_t;
+    type system_mail_t;
+    type var_spool_t;
+    type crond_t;
+    type cron_spool_t;
+    type logrotate_t;
+    type mandb_t;
+    type faillog_t;
+
+    class chr_file {open read write getattr setattr ioctl open};
+    class fd {use};
+    class lnk_file {read rename unlink create};
+    class capability {sys_tty_config dac_read_search};
+    class system {module_request};
+    class dir {add_name getattr create remove_name rmdir watch write search mounton};
+    class file {setattr create open read lock write rename unlink getattr map ioctl watch};
+    class vsock_socket {bind connect create getattr getopt read write};
+    class unix_stream_socket {connectto};
+    class key {read setattr view write};
+    class filesystem {getattr};
+    class netlink_generic_socket {bind create getattr read write};
+    class udp_socket {node_bind};
+}
+
+
+#background trash
+allow system_mail_t self:capability {dac_read_search};
+allow system_mail_t var_spool_t:dir {write add_name};
+allow system_mail_t var_spool_t:file {create open write};
+allow mandb_t system_cronjob_tmp_t:file {read write};
+allow crond_t cron_spool_t:dir {watch};
+allow crond_t system_cron_spool_t:dir {watch};
+allow crond_t system_cron_spool_t:file {watch};
+allow system_cronjob_t initrc_state_t:lnk_file {read};
+allow system_cronjob_t portage_tmp_t:lnk_file {read};
+allow system_cronjob_t faillog_t:dir {write add_name};
+allow system_cronjob_t faillog_t:file {create lock open read setattr write};
+allow logrotate_t system_cronjob_tmp_t:file {read write};
+allow logrotate_t var_lib_t:file {create open write rename unlink write};
+allow logrotate_t system_cronjob_tmp_t:file {ioctl};
+
+#booting
+allow lvm_t device_t:chr_file {open read write};
+allow initrc_t portage_tmp_t:lnk_file {read};
+allow initrc_t etc_t:lnk_file {rename unlink create};
+allow initrc_t kernel_t:system {module_request};
+allow initrc_t nsfs_t:file {getattr};
+allow initrc_t portage_tmp_t:lnk_file {read};
+allow initrc_t self:vsock_socket {bind connect create getattr getopt read write};
+allow initrc_t resolvconf_conf_t:file {open read};
+allow initrc_t var_t:file {open read};
+allow kernel_t etc_t:file {getattr lock open read};
+allow kernel_t portage_tmp_t:lnk_file {read};
+allow kernel_t self:key {read setattr view write};
+allow kmod_t device_t:chr_file {getattr open read write};
+allow kmod_t initrc_tmp_t:file {read};
+allow tmpfiles_t device_t:chr_file {setattr};
+allow tmpfiles_t self:capability {dac_read_search sys_tty_config};
+allow udev_t udev_rules_t:dir {watch};
+allow udev_t udev_runtime_t:dir {watch};
+allow udev_t portage_tmp_t:lnk_file {read};
+allow dmesg_t etc_t:file {getattr open read};
+allow mount_t initrc_tmp_t:dir {mounton};
+allow udev_t systemd_hwdb_t:file {getattr map open read};
+allow getty_t getty_runtime_t:file {watch};
+
+#wg connect
+allow initrc_t self:netlink_generic_socket { bind create getattr read write }; 
+allow initrc_t node_t:udp_socket node_bind;
+
+#services
+allow dhcpc_script_t console_device_t:chr_file {getattr ioctl open read write};
+allow dhcpc_script_t init_t:fd {use};
+allow dhcpc_script_t portage_tmp_t:lnk_file {read};
+allow dhcpc_script_t self:capability {sys_tty_config};
+allow dhcpc_t portage_tmp_t:lnk_file {read};
+allow resolvconf_t init_t:fd {use};
+allow resolvconf_t self:capability {sys_tty_config};
+allow resolvconf_t proc_t:file {getattr open read};
+allow resolvconf_t tmpfs_t:filesystem {getattr};
+allow ssh_keygen_t locale_t:dir {search};
+allow ssh_keygen_t locale_t:file {getattr map open read};
+
+#generic
+allow staff_sudo_t staff_t:dir {search};
+allow staff_sudo_t staff_t:file {open read};

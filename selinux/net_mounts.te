@@ -1,0 +1,24 @@
+module net_mounts 1.0;
+#polciy for BASIC nfs and samba mount support
+
+require {
+    type initrc_t;
+    type kernel_t;
+    type mount_t;
+    type rpcbind_t;
+    type rpcd_t;
+    type rpc_pipefs_t;
+    type rpcbind_runtime_t;
+    type nfs_t;
+
+    class dir {add_name create remove_name rmdir watch write};
+    class file {open read rename unlink};
+    class unix_stream_socket {connectto};
+    class sock_file {write};
+}
+
+allow initrc_t nfs_t:dir {add_name create remove_name rmdir watch write};
+allow initrc_t nfs_t:file {open read rename unlink};
+allow rpcd_t rpc_pipefs_t:dir {watch};
+allow kernel_t rpcbind_t:unix_stream_socket {connectto};
+allow mount_t rpcbind_runtime_t:sock_file {write};

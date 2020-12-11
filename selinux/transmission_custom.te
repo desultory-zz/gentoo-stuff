@@ -1,0 +1,23 @@
+module transmission_custom 1.0;
+#policy for transmission server, writes to nfs
+
+require {
+    type initrc_t;
+    type node_t;
+    type unreserved_port_t;
+    type nfs_t;
+    type run_init_t;
+    type initrc_state_t;
+    type init_t;
+
+    class tcp_socket {node_bind name_bind};
+    class file {getattr open read create write};
+    class dir {search};
+}
+
+allow initrc_t node_t:tcp_socket node_bind;
+allow initrc_t unreserved_port_t:tcp_socket name_bind;
+allow initrc_t nfs_t:file {create write};
+allow run_init_t init_t:dir search;
+allow run_init_t init_t:file { getattr open read };
+allow run_init_t initrc_state_t:file { getattr open read };

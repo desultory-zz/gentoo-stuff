@@ -1,0 +1,26 @@
+/etc/selinux/semanage.conf
+#set this to 0 if there are cron errors
+expand-check=0
+
+#make custom selinux module
+audit2allow -am {name} > {name}.te
+#edit the te file now
+checkmodule -M -m -o {name}.mod {name}.te
+semodule_package -o {name}.pp -m {name}.mod
+semodule -i {name}.pp
+
+#set dhcp routes
+dhcp-option=121,0.0.0.0/0,{router ip},{network/cidr}
+
+
+
+#make sure man dosn't spam auth logs
+edit file /etc/cron.daily/man-db
+
+last line should be as follows
+
+exec nice mandb --quiet
+
+
+# semanage fcontext -a -t swapfile_t "/path/to/swapfile"
+# restorecon /path/to/swapfile

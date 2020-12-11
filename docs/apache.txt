@@ -1,0 +1,3 @@
+https://wiki.gentoo.org/wiki/PHP
+https://wiki.gentoo.org/wiki/Apache
+https://www.serverlab.ca/tutorials/linux/web-servers-linux/configuring-selinux-policies-for-apache-web-servers/

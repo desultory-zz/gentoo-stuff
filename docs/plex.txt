@@ -1,0 +1,4 @@
+emerge eselect-repository
+eselect repository add plex-overlay git https://github.com/comio/plex-overlay
+emerge --sync
+emerge plex-media-server
