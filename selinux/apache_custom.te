@@ -1,23 +1,26 @@
-module apache_custom 1.0;
 #selinux policy allowing apache and thelounge IRC
+module apache_custom 1.2;
 
 require {
-    type initrc_t;
-    type node_t;
-    type cslistener_port_t;
-    type usr_t;
-    type zero_device_t;
-    type console_device_t;
-    type httpd_t;
-    type udevadm_t;
-    type init_t;
+        type initrc_t;
+        type node_t;
+        type cslistener_port_t;
+        type usr_t;
+        type zero_device_t;
+        type console_device_t;
+        type httpd_t;
+        type udevadm_t;
+        type init_t;
+        type nfs_t;
 
-    class tcp_socket {node_bind name_bind};
-    class process {execmem};
-    class file { execute execute_no_trans};
-    class chr_file {map read write};
-    class fd {use};
+        class tcp_socket {node_bind name_bind};
+        class process {execmem};
+        class file {write execute execute_no_trans create unlink};
+        class chr_file {map read write};
+        class fd {use};
+        class dir {create write add_name remove_name};
 }
+
 
 allow initrc_t cslistener_port_t:tcp_socket {name_bind};
 allow initrc_t node_t:tcp_socket {node_bind};
@@ -26,3 +29,7 @@ allow initrc_t usr_t:file {execute execute_no_trans};
 allow httpd_t zero_device_t:chr_file {map};
 allow udevadm_t console_device_t:chr_file {read write};
 allow udevadm_t init_t:fd {use};
+
+#for imagehost
+allow httpd_t nfs_t:dir {create write add_name remove_name};
+allow httpd_t nfs_t:file {create write unlink};
