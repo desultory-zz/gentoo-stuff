@@ -1,4 +1,4 @@
-module base_custom 2.1;
+module base_custom 2.2;
 #basic policy for minimal gentoo systems running initrc
 
 require {
@@ -53,6 +53,9 @@ require {
     type logrotate_t;
     type mandb_t;
     type faillog_t;
+
+    type run_init_t;
+    type init_t;
 
     class chr_file {open read write getattr setattr ioctl open};
     class fd {use};
@@ -112,7 +115,7 @@ allow udev_t systemd_hwdb_t:file {getattr map open read};
 allow getty_t getty_runtime_t:file {watch};
 
 #wg connect
-allow initrc_t self:netlink_generic_socket { bind create getattr read write }; 
+allow initrc_t self:netlink_generic_socket { bind create getattr read write };
 allow initrc_t node_t:udp_socket node_bind;
 
 #services
@@ -127,6 +130,7 @@ allow resolvconf_t proc_t:file {getattr open read};
 allow resolvconf_t tmpfs_t:filesystem {getattr};
 allow ssh_keygen_t locale_t:dir {search};
 allow ssh_keygen_t locale_t:file {getattr map open read};
+allow run_init_t init_t:file {read};
 
 #generic
 allow staff_sudo_t staff_t:dir {search};
