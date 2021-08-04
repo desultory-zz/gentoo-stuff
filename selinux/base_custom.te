@@ -15,7 +15,7 @@ require {
     type node_t;
     type proc_t;
     type initrc_t;
-    type udev_runtime_t;
+w    type udev_runtime_t;
     type udev_rules_t;
     type dmesg_t;
     type device_t;
@@ -148,6 +148,8 @@ allow run_init_t init_t:file {read};
 allow chkpwd_t sysctl_kernel_t:dir {search};
 allow chkpwd_t sysctl_kernel_t:file {read open};
 allow chkpwd_t proc_t:filesystem {getattr};
+allow ssh_keygen_t proc_t:file {read};
+allow tmpfiles_t syctl_kernel_t:dir {search};
 
 #sudo
 allow staff_sudo_t staff_t:dir {search};
