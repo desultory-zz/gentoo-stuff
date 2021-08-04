@@ -36,8 +36,6 @@ allow admin_crontab_t portage_tmp_t:lnk_file {read};
 allow admin_crontab_t proc_t:filesystem {getattr};
 allow admin_crontab_t sysctl_kernel_t:dir {search};
 allow admin_crontab_t sysctl_kernel_t:file {open read};
-allow admin_crontab_t unlabeled_t:dir {getattr search};
-
 
 allow crontab_t faillog_t:dir {search};
 allow crontab_t portage_tmp_t:lnk_file {read};
