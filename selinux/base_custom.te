@@ -74,7 +74,7 @@ require {
     class capability {sys_tty_config dac_read_search};
     class system {module_request};
     class dir {add_name getattr create remove_name rmdir watch write search mounton read};
-    class file {setattr create open read lock write rename unlink getattr map ioctl watch};
+    class file {link setattr create open read lock write rename unlink getattr map ioctl watch};
     class vsock_socket {bind connect create getattr getopt read write};
     class unix_stream_socket {getattr connectto};
     class key {read setattr view write};
