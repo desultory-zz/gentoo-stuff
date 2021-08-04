@@ -31,6 +31,7 @@ require {
     type init_t;
     type hwclock_t;
     type udevadm_t;
+    type devlog_t;
 
     type tmpfiles_t;
     type tmpfs_t;
@@ -85,7 +86,8 @@ require {
     class netlink_audit_socket {getattr};
     class udp_socket {node_bind};
     class process {signal getcap setcap getpgid};
-    class unix_dgram_socket {sendto read write ioctl};
+    class unix_dgram_socket {getattr sendto read write ioctl};
+    class sock_file {write};
 }
 
 
@@ -104,11 +106,31 @@ allow system_cronjob_t faillog_t:file {create lock open read setattr write};
 allow logrotate_t system_cronjob_tmp_t:file {read write};
 allow logrotate_t var_lib_t:file {create open write rename unlink write};
 allow logrotate_t system_cronjob_tmp_t:file {ioctl};
+
+#DHCP
 allow dhcpc_script_t dhcpc_t:unix_dgram_socket {read write ioctl};
 allow dhcpc_script_t sysctl_kernel_t: dir {search read};
 allow dhcpc_script_t sysctl_kernel_t: file {read};
 allow auditctl_t proc_t:filesystem {getattr};
 allow hostname_t dhcpc_t:unix_dgram_socket {read write};
+allow dhcpc_script_t sysctl_kernel_t:file {ioctl open write};
+allow dhcpc_t nsfs_t:file {getattr};
+allow dhcpc_t self:unix_dgram_socket {sendto};
+allow resolvconf_t dhcpc_t:unix_dgram_socket {ioctl read write};
+allow hwclock_t proc_t:filesystem {getattr};
+allow initrc_t auditd_t:netlink_audit_socket {getattr};
+allow initrc_t auditd_t:unix_stream_socket {getattr};
+allow initrc_t dhcpc_t:netlink_generic_socket {getattr};
+allow initrc_t dhcpc_t:netlink_route_socket {getattr};
+allow initrc_t dhcpc_t:packet_socket {getattr};
+allow initrc_t dhcpc_t:rawip_socket {getattr};
+allow initrc_t dhcpc_t:unix_stream_socket {getattr};
+allow dhcpc_script_t devlog_t:sock_file {write};
+allow dhcpc_script_t dhcpc_t:unix_dgram_socket {getattr};
+allow dhcpc_script_t locale_t:file {read};
+allow dhcpc_script_t self:unix_dgram_socket {create};
+
+
 
 #booting
 allow lvm_t device_t:chr_file {open read write};
@@ -137,18 +159,6 @@ allow getty_t getty_runtime_t:file {watch};
 allow ssh_keygen_t proc_t:file {read open getattr};
 allow tmpfiles_t sysctl_kernel_t:dir {search};
 allow tmpfiles_t sysctl_kernel_t:file {read open};
-allow dhcpc_script_t sysctl_kernel_t:file {ioctl open};
-allow dhcpc_t nsfs_t:file {getattr};
-allow dhcpc_t self:unix_dgram_socket {sendto};
-allow resolvconf_t dhcpc_t:unix_dgram_socket {ioctl read write};
-allow hwclock_t proc_t:filesystem {getattr};
-allow initrc_t auditd_t:netlink_audit_socket {getattr};
-allow initrc_t auditd_t:unix_stream_socket {getattr};
-allow initrc_t dhcpc_t:netlink_generic_socket {getattr};
-allow initrc_t dhcpc_t:netlink_route_socket {getattr};
-allow initrc_t dhcpc_t:packet_socket {getattr};
-allow initrc_t dhcpc_t:rawip_socket {getattr};
-allow initrc_t dhcpc_t:unix_stream_socket {getattr};
 allow initrc_t sshd_t:unix_stream_socket {getattr};
 allow initrc_t udev_t:netlink_kobject_uevent_socket {getattr};
 allow initrc_t udev_t:unix_stream_socket {getattr};
