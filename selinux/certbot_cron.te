@@ -23,7 +23,7 @@ require {
 }
 
 allow crond_t http_port_t:tcp_socket {name_connect};
-allow crond_t httpd_config_t:{dir search};
+allow crond_t httpd_config_t {dir search};
 allow crond_t mnt_t:dir {getattr search};
 allow crond_t nfs_t:dir {add_name create getattr open read remove_name rmdir search write};
 allow crond_t nfs_t:file {create execute execute_no_trans rename setattr unlink};
