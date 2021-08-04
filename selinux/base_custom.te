@@ -75,7 +75,7 @@ require {
     class filesystem {getattr};
     class netlink_generic_socket {bind create getattr read write};
     class udp_socket {node_bind};
-    class process {getcap setcap};
+    class process {getcap setcap getpgid};
     class unix_dgram_socket {read write ioctl};
 }
 
