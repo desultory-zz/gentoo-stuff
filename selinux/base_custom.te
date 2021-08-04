@@ -39,6 +39,7 @@ require {
     type initrc_tmp_t;
     type initrc_state_t;
     type auditctl_t;
+    type auditd_t;
 
     type dhcpc_t;
     type dhcpc_script_t;
