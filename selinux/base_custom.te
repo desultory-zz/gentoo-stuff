@@ -15,7 +15,7 @@ require {
     type node_t;
     type proc_t;
     type initrc_t;
-w    type udev_runtime_t;
+    type udev_runtime_t;
     type udev_rules_t;
     type dmesg_t;
     type device_t;
