@@ -19,10 +19,11 @@ require {
     type rndc_port_t;
     type user_home_t;
     type user_home_dir_t;
+    type ndc_t;
 
     class dir {add_name remove_name write search getattr open read};
     class lnk_file {read};
-    class process {setcap};
+    class process {setcap getsched};
     class filesystem {getattr};
     class file {getattr ioctl unlink execute execute_no_trans map append create rename setattr write open read};
     class tcp_socket {name_connect node_bind};
@@ -60,3 +61,5 @@ allow crond_t rndc_port_t:tcp_socket {name_connect};
 allow crond_t user_home_t:dir {add_name getattr open read remove_name search write};
 allow crond_t user_home_t:file {append create getattr ioctl open read rename setattr unlink write};
 
+allow ndc_t kernel_t:system {module_request};
+allow ndc_t self:process {getsched};
