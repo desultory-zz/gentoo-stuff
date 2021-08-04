@@ -97,6 +97,7 @@ allow logrotate_t var_lib_t:file {create open write rename unlink write};
 allow logrotate_t system_cronjob_tmp_t:file {ioctl};
 allow dhcpc_script_t dhcpc_t:unix_dgram_socket {read write ioctl};
 allow dhcpc_script_t sysctl_kernel_t: dir {search read};
+allow dhcpc_script_t sysctl_kernel_t: file {read};
 allow auditctl_t proc_t:filesystem {getattr};
 allow hostname_t dhcpc_t:unix_dgram_socket {read write};
 
@@ -139,6 +140,7 @@ allow resolvconf_t init_t:fd {use};
 allow resolvconf_t self:capability {sys_tty_config};
 allow resolvconf_t proc_t:file {getattr open read};
 allow resolvconf_t tmpfs_t:filesystem {getattr};
+allow resolvconf_t dhcpc_t:unix_dgram_socket {read write};
 allow ssh_keygen_t locale_t:dir {search};
 allow ssh_keygen_t locale_t:file {getattr map open read};
 allow sshd_t self:process {getcap setcap};
