@@ -153,3 +153,4 @@ allow chkpwd_t proc_t:filesystem {getattr};
 allow staff_sudo_t staff_t:dir {search};
 allow staff_sudo_t staff_t:file {open read};
 allow staff_sudo_t proc_t:filesystem {getattr};
+allow staff_sudo_t staff_t:process {getpgid};
