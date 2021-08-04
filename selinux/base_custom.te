@@ -76,7 +76,7 @@ require {
     class netlink_generic_socket {bind create getattr read write};
     class udp_socket {node_bind};
     class process {getcap setcap getpgid};
-    class unix_dgram_socket {read write ioctl};
+    class unix_dgram_socket {sendto read write ioctl};
 }
 
 
@@ -128,9 +128,13 @@ allow getty_t getty_runtime_t:file {watch};
 allow ssh_keygen_t proc_t:file {read open getattr};
 allow tmpfiles_t sysctl_kernel_t:dir {search};
 allow tmpfiles_t sysctl_kernel_t:file {read open};
+allow dhcpc_script_t sysctl_kernel_t:file {ioctl open};
+allow dhcpc_t nsfs_t:file {getattr};
+allow dhcpc_t self:unix_dgram_socket {sendto};
+allow resolvconf_t dhcpc_t:unix_dgram_socket {ioctl read write};
 
 #wg connect
-allow initrc_t self:netlink_generic_socket { bind create getattr read write };
+allow initrc_t self:netlink_generic_socket {bind create getattr read write};
 allow initrc_t node_t:udp_socket node_bind;
 
 #services
@@ -143,7 +147,6 @@ allow resolvconf_t init_t:fd {use};
 allow resolvconf_t self:capability {sys_tty_config};
 allow resolvconf_t proc_t:file {getattr open read};
 allow resolvconf_t tmpfs_t:filesystem {getattr};
-allow resolvconf_t dhcpc_t:unix_dgram_socket {read write};
 allow ssh_keygen_t locale_t:dir {search};
 allow ssh_keygen_t locale_t:file {getattr map open read};
 allow sshd_t self:process {getcap setcap};
