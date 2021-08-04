@@ -125,9 +125,9 @@ allow dmesg_t etc_t:file {getattr open read};
 allow mount_t initrc_tmp_t:dir {mounton};
 allow udev_t systemd_hwdb_t:file {getattr map open read};
 allow getty_t getty_runtime_t:file {watch};
-allow ssh_keygen_t proc_t:file {read open};
+allow ssh_keygen_t proc_t:file {read open getattr};
 allow tmpfiles_t sysctl_kernel_t:dir {search};
-allow tmpfiles_t sysctl_kernel_t:file {read};
+allow tmpfiles_t sysctl_kernel_t:file {read open};
 
 #wg connect
 allow initrc_t self:netlink_generic_socket { bind create getattr read write };
