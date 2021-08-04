@@ -6,7 +6,7 @@ require {
     type named_cache_t;
     type named_zone_t;
     type portage_tmp_t;
-    type_faillog_t;
+    type faillog_t;
     type proc_t;
     type crontab_t;
     type sysctl_kernel_t;
