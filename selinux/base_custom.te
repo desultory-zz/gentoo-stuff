@@ -98,7 +98,7 @@ allow logrotate_t system_cronjob_tmp_t:file {ioctl};
 allow dhcpc_script_t dhcpc_t:unix_dgram_socket {read write ioctl};
 allow dhcpc_script_t sysctl_kernel_t: dir {search read};
 allow auditctl_t proc_t:filesystem {getattr};
-allow hostname_t dhcp_t:unix_dgram_socket {read write};
+allow hostname_t dhcpc_t:unix_dgram_socket {read write};
 
 #booting
 allow lvm_t device_t:chr_file {open read write};
