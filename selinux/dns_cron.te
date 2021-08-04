@@ -20,6 +20,7 @@ require {
     type ndc_t;
     type system_mail_t;
     type var_spool_t;
+    type user_home_t;
 
     class dir {add_name remove_name write search getattr open read};
     class lnk_file {read};
@@ -64,3 +65,6 @@ allow ndc_t self:process {getsched setsched};
 allow system_mail_t var_spool_t:dir {read remove_name};
 allow system_mail_t var_spool_t:fifo_file {open write};
 allow system_mail_t var_spool_t:file {link read unlink};
+
+allow crond_t user_home_t:dir {getattr open read search};
+allow crond_t user_home_t:file {getattr ioctl open read};
