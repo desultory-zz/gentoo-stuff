@@ -28,6 +28,7 @@ require {
     type run_init_t;
     type sysctl_kernel_t;
     type init_t;
+    type hwclock_t;
 
     type tmpfiles_t;
     type tmpfs_t;
@@ -70,10 +71,15 @@ require {
     class dir {add_name getattr create remove_name rmdir watch write search mounton read};
     class file {setattr create open read lock write rename unlink getattr map ioctl watch};
     class vsock_socket {bind connect create getattr getopt read write};
-    class unix_stream_socket {connectto};
+    class unix_stream_socket {getattr connectto};
     class key {read setattr view write};
     class filesystem {getattr};
     class netlink_generic_socket {bind create getattr read write};
+    class netlink_route_socket {getattr};
+    class packet_socket {getattr};
+    class rawip_socket {getattr};
+    class netlink_kobject_uevent_socket {getattr};
+    class netlink_audit_socket {getattr};
     class udp_socket {node_bind};
     class process {getcap setcap getpgid};
     class unix_dgram_socket {sendto read write ioctl};
@@ -132,6 +138,19 @@ allow dhcpc_script_t sysctl_kernel_t:file {ioctl open};
 allow dhcpc_t nsfs_t:file {getattr};
 allow dhcpc_t self:unix_dgram_socket {sendto};
 allow resolvconf_t dhcpc_t:unix_dgram_socket {ioctl read write};
+allow hwclock_t proc_t:filesystem {getattr};
+allow initrc_t auditd_t:netlink_audit_socket {getattr};
+allow initrc_t auditd_t:unix_stream_socket {getattr};
+allow initrc_t dhcpc_t:netlink_generic_socket {getattr};
+allow initrc_t dhcpc_t:netlink_route_socket {getattr};
+allow initrc_t dhcpc_t:packet_socket {getattr};
+allow initrc_t dhcpc_t:rawip_socket {getattr};
+allow initrc_t dhcpc_t:unix_stream_socket {getattr};
+allow initrc_t sshd_t:unix_stream_socket {getattr};
+allow initrc_t udev_t:netlink_kobject_uevent_socket {getattr};
+allow initrc_t udev_t:unix_stream_socket {getattr};
+allow udevadm_t console_device_t:chr_file {read write};
+allow udevadm_t init_t:fd {use};
 
 #wg connect
 allow initrc_t self:netlink_generic_socket {bind create getattr read write};
