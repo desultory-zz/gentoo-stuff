@@ -29,6 +29,7 @@ require {
     type sysctl_kernel_t;
     type init_t;
     type hwclock_t;
+    type udevadm_t;
 
     type tmpfiles_t;
     type tmpfs_t;
