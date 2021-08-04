@@ -9,13 +9,23 @@ require {
     type faillog_t;
     type proc_t;
     type crontab_t;
+    type crond_t;
     type sysctl_kernel_t;
+    type dnssec_t;
+    type http_port_t;
+    type kernel_t;
+    type ndc_exec_t;
+    type node_t;
+    type rndc_port_t;
+    type_user_home_t;
 
-    class dir {search getattr};
+    class dir {add_name remove_name write search getattr open read =};
     class lnk_file {read};
     class process {setcap};
     class filesystem {getattr};
-    class file {open read};
+    class file {getattr ioctl unlink execute execute_no_trans map append create rename setattr write open read};
+    class tcp_socket {name_connect node_bind};
+    class system {module_request};
 }
 
 allow admin_crontab_t named_cache_t:dir {search};
@@ -29,3 +39,19 @@ allow crontab_t proc_t:filesystem {getattr};
 allow crontab_t self:process {setcap};
 allow crontab_t sysctl_kernel_t:dir {search};
 allow crontab_t sysctl_kernel_t:file {open read};
+
+allow crond_t dnssec_t:file {getattr open read};
+allow crond_t http_port_t:tcp_socket {name_connect};
+
+allow crond_t kernel_t:system {module_request};
+allow crond_t named_cache_t:dir {search};
+
+allow crond_t named_zone_t:dir {add_name remove_name search write};
+allow crond_t named_zone_t:file {getattr ioctl open read unlink};
+allow crond_t named_zone_t:lnk_file {read};
+allow crond_t ndc_exec_t:file {execute execute_no_trans getattr map open read};
+allow crond_t node_t:tcp_socket {node_bind};
+allow crond_t rndc_port_t:tcp_socket {name_connect};
+
+allow crond_t user_home_t:dir {add_name getattr open read remove_name search write};
+allow crond_t user_home_t:file {append create getattr ioctl open read rename setattr unlink write};
