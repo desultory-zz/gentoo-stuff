@@ -66,6 +66,7 @@ require {
     type faillog_t;
     type hostname_t;
 
+    type semanage_t;
 
     class chr_file {open read write getattr setattr ioctl open};
     class fd {use};
@@ -192,3 +193,6 @@ allow staff_sudo_t staff_t:file {open read};
 allow staff_sudo_t proc_t:filesystem {getattr};
 allow staff_sudo_t staff_t:process {getpgid};
 allow staff_sudo_t sysadm_t:process {signal};
+
+#semanage
+allow semanage_t proc_t:filesystem {getattr};
