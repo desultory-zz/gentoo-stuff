@@ -25,7 +25,7 @@ require {
     class lnk_file {read};
     class process {setcap getsched setsched};
     class filesystem {getattr};
-    class file {getattr ioctl unlink execute execute_no_trans map append create rename setattr write open read};
+    class file {link getattr ioctl unlink execute execute_no_trans map append create rename setattr write open read};
     class tcp_socket {name_connect node_bind};
     class system {module_request};
     class fifo_file {open write};
