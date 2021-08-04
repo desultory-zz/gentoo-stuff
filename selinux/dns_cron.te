@@ -1,0 +1,31 @@
+module dns_cron 1.0;
+#selinux policy for cron job to reload adblock zones
+
+require {
+    type admin_crontab_t;
+    type named_cache_t;
+    type named_zone_t;
+    type portage_tmp_t;
+    type_faillog_t;
+    type proc_t;
+    type crontab_t;
+    type sysctl_kernel_t;
+
+    class dir {search getattr};
+    class lnk_file {read};
+    class process {setcap};
+    class filesystem {getattr};
+    class file {open read};
+}
+
+allow admin_crontab_t named_cache_t:dir {search};
+allow admin_crontab_t named_zone_t:dir {getattr search};
+allow admin_crontab_t named_zone_t:lnk_file {read};
+allow admin_crontab_t portage_tmp_t:lnk_file {read};
+
+allow crontab_t faillog_t:dir {search};
+allow crontab_t portage_tmp_t:lnk_file {read};
+allow crontab_t proc_t:filesystem {getattr};
+allow crontab_t self:process {setcap};
+allow crontab_t sysctl_kernel_t:dir {search};
+allow crontab_t sysctl_kernel_t:file {open read};

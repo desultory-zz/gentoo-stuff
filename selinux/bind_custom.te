@@ -1,5 +1,5 @@
 module bind_custom 1.5;
-#selinux polciy for bind and dnscrypt
+#selinux policy for bind and dnscrypt
 
 require {
     type kernel_t;
