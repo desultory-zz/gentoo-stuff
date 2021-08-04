@@ -4,6 +4,7 @@ module base_custom 2.5;
 require {
     type staff_sudo_t;
     type staff_t;
+    type sysadm_t;
 
     type kernel_t;
     type kmod_t;
@@ -83,7 +84,7 @@ require {
     class netlink_kobject_uevent_socket {getattr};
     class netlink_audit_socket {getattr};
     class udp_socket {node_bind};
-    class process {getcap setcap getpgid};
+    class process {signal getcap setcap getpgid};
     class unix_dgram_socket {sendto read write ioctl};
 }
 
@@ -181,3 +182,4 @@ allow staff_sudo_t staff_t:dir {search};
 allow staff_sudo_t staff_t:file {open read};
 allow staff_sudo_t proc_t:filesystem {getattr};
 allow staff_sudo_t staff_t:process {getpgid};
+allow staff_sudo_t sysadm_t:process {signal};
