@@ -95,7 +95,7 @@ require {
 #background trash
 allow system_mail_t self:capability {dac_read_search};
 allow system_mail_t var_spool_t:dir {write add_name};
-allow system_mail_t var_spool_t:file {create open write};
+allow system_mail_t var_spool_t:file {link read create open write};
 allow mandb_t system_cronjob_tmp_t:file {read write};
 allow crond_t cron_spool_t:dir {watch};
 allow crond_t system_cron_spool_t:dir {watch};
@@ -105,7 +105,7 @@ allow system_cronjob_t portage_tmp_t:lnk_file {read};
 allow system_cronjob_t faillog_t:dir {write add_name};
 allow system_cronjob_t faillog_t:file {create lock open read setattr write};
 allow logrotate_t system_cronjob_tmp_t:file {read write};
-allow logrotate_t var_lib_t:file {create open write rename unlink write};
+allow logrotate_t var_lib_t:file {setattr create open write rename unlink write};
 allow logrotate_t system_cronjob_tmp_t:file {ioctl};
 
 #DHCP
