@@ -86,7 +86,7 @@ require {
     class netlink_audit_socket {getattr};
     class udp_socket {node_bind};
     class process {signal getcap setcap getpgid};
-    class unix_dgram_socket {getattr sendto read write ioctl};
+    class unix_dgram_socket {getattr sendto read write ioctl create};
     class sock_file {write};
 }
 
