@@ -1,4 +1,4 @@
-module base_custom 2.5;
+module base_custom 3.0;
 #basic policy for minimal gentoo systems running initrc
 
 require {
@@ -116,7 +116,7 @@ allow hostname_t dhcpc_t:unix_dgram_socket {read write};
 allow dhcpc_script_t sysctl_kernel_t:file {ioctl open write};
 allow dhcpc_t nsfs_t:file {getattr};
 allow dhcpc_t self:unix_dgram_socket {sendto};
-allow resolvconf_t dhcpc_t:unix_dgram_socket {ioctl read write};
+allow resolvconf_t dhcpc_t:unix_dgram_socket {getattr ioctl read write};
 allow hwclock_t proc_t:filesystem {getattr};
 allow initrc_t auditd_t:netlink_audit_socket {getattr};
 allow initrc_t auditd_t:unix_stream_socket {getattr};
@@ -129,7 +129,6 @@ allow dhcpc_script_t devlog_t:sock_file {write};
 allow dhcpc_script_t dhcpc_t:unix_dgram_socket {getattr};
 allow dhcpc_script_t locale_t:file {read};
 allow dhcpc_script_t self:unix_dgram_socket {create};
-
 
 
 #booting
