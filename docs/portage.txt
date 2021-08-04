@@ -10,7 +10,6 @@ GENTOO_MIRRORS="https://mirrors.lug.mtu.edu/gentoo/ https://gentoo.osuosl.org/ h
 GRUB_PLATFORMS="efi-64"
 POLICY_TYPES="strict"
 USE="peer_perms open_perms ubac -ipv6"
-MAKEOPTS="-j1"
 
 #FEATURES="ccache"
 #CCACHE_DIR="/mnt/terry2/ccache"
