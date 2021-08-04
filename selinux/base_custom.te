@@ -149,7 +149,7 @@ allow chkpwd_t sysctl_kernel_t:dir {search};
 allow chkpwd_t sysctl_kernel_t:file {read open};
 allow chkpwd_t proc_t:filesystem {getattr};
 allow ssh_keygen_t proc_t:file {read};
-allow tmpfiles_t syctl_kernel_t:dir {search};
+allow tmpfiles_t sysctl_kernel_t:dir {search};
 
 #sudo
 allow staff_sudo_t staff_t:dir {search};
