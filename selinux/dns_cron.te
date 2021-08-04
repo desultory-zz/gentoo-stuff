@@ -18,6 +18,8 @@ require {
     type node_t;
     type rndc_port_t;
     type ndc_t;
+    type system_mail_t;
+    type var_spool_t;
 
     class dir {add_name remove_name write search getattr open read};
     class lnk_file {read};
@@ -49,8 +51,8 @@ allow crond_t http_port_t:tcp_socket {name_connect};
 allow crond_t kernel_t:system {module_request};
 allow crond_t named_cache_t:dir {search};
 
-allow crond_t named_zone_t:dir {add_name remove_name search write};
-allow crond_t named_zone_t:file {getattr ioctl open read unlink};
+allow crond_t named_zone_t:dir {getattr open read add_name remove_name search write};
+allow crond_t named_zone_t:file {append create rename setattr write getattr ioctl open read unlink};
 allow crond_t named_zone_t:lnk_file {read};
 allow crond_t ndc_exec_t:file {execute execute_no_trans getattr map open read};
 allow crond_t node_t:tcp_socket {node_bind};
@@ -58,3 +60,6 @@ allow crond_t rndc_port_t:tcp_socket {name_connect};
 allow ndc_t kernel_t:system {module_request};
 allow ndc_t self:process {getsched setsched};
 
+allow system_mail_t var_spool_t:dir {read remove_name};
+allow system_mail_t var_spool_t:fifo_file {open write};
+allow system_mail_t var_spool_t:file {link read unlink};
