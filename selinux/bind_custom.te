@@ -1,4 +1,4 @@
-module bind_custom 1.5;
+module bind_custom 2.0;
 #selinux policy for bind and dnscrypt
 
 require {
@@ -13,7 +13,7 @@ require {
 
     class system {module_request};
     class dir {add_name remove_name write create getattr open read rmdir search write};
-    class file {create getattr open read rename unlink write ioctl};
+    class file {create getattr setattr open read rename unlink write ioctl};
     class tcp_socket {name_bind node_bind};
     class udp_socket {name_bind};
     class process {getsched};
@@ -25,7 +25,7 @@ allow named_t var_t:file {create getattr open read rename unlink write};
 allow initrc_t dns_port_t:tcp_socket {name_bind};
 allow initrc_t dns_port_t:udp_socket {name_bind};
 allow initrc_t node_t:tcp_socket {node_bind};
-allow initrc_t var_t:file {create write open read rename unlink};
+allow initrc_t var_t:file {create setattr write open read rename unlink};
 allow resolvconf_t initrc_runtime_t:dir {add_name create getattr open read remove_name rmdir search write};
 allow resolvconf_t initrc_runtime_t:file {create getattr ioctl open read unlink write};
 allow named_t self:process {getsched};
