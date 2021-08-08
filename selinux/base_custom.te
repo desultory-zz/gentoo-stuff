@@ -68,7 +68,6 @@ require {
 
     type semanage_t;
     type security_t;
-    type shadow_t;
 
     class chr_file {open read write getattr setattr ioctl open};
     class fd {use};
@@ -105,24 +104,26 @@ allow crond_t system_cron_spool_t:file {watch};
 allow system_cronjob_t initrc_state_t:lnk_file {read};
 allow system_cronjob_t portage_tmp_t:lnk_file {read};
 allow system_cronjob_t faillog_t:dir {write add_name};
+allow system_cronjob_t security_t:file {map};
+allow system_cronjob_t self:process {getcap};
 allow system_cronjob_t faillog_t:file {create lock open read setattr write};
 allow logrotate_t system_cronjob_tmp_t:file {read write};
 allow logrotate_t var_lib_t:file {setattr create open write rename unlink write};
 allow logrotate_t system_cronjob_tmp_t:file {ioctl};
 
-allow system_cronjob_t security_t:file {map};
-allow system_cronjob_t self:process {getcap};
-allow system_cronjob_t shadow_t:file {read};
-
 #DHCP
 allow dhcpc_script_t dhcpc_t:unix_dgram_socket {read write ioctl};
 allow dhcpc_script_t sysctl_kernel_t: dir {search read};
+allow dhcpc_script_t devlog_t:sock_file {write};
+allow dhcpc_script_t dhcpc_t:unix_dgram_socket {getattr};
+allow dhcpc_script_t locale_t:file {read};
+allow dhcpc_script_t self:unix_dgram_socket {create};
 allow dhcpc_script_t sysctl_kernel_t: file {read};
-allow auditctl_t proc_t:filesystem {getattr};
-allow hostname_t dhcpc_t:unix_dgram_socket {read write};
 allow dhcpc_script_t sysctl_kernel_t:file {ioctl open write};
 allow dhcpc_t nsfs_t:file {getattr};
 allow dhcpc_t self:unix_dgram_socket {sendto};
+allow auditctl_t proc_t:filesystem {getattr};
+allow hostname_t dhcpc_t:unix_dgram_socket {read write};
 allow resolvconf_t dhcpc_t:unix_dgram_socket {getattr ioctl read write};
 allow hwclock_t proc_t:filesystem {getattr};
 allow initrc_t auditd_t:netlink_audit_socket {getattr};
@@ -132,10 +133,6 @@ allow initrc_t dhcpc_t:netlink_route_socket {getattr};
 allow initrc_t dhcpc_t:packet_socket {getattr};
 allow initrc_t dhcpc_t:rawip_socket {getattr};
 allow initrc_t dhcpc_t:unix_stream_socket {getattr};
-allow dhcpc_script_t devlog_t:sock_file {write};
-allow dhcpc_script_t dhcpc_t:unix_dgram_socket {getattr};
-allow dhcpc_script_t locale_t:file {read};
-allow dhcpc_script_t self:unix_dgram_socket {create};
 
 
 #booting
@@ -148,6 +145,9 @@ allow initrc_t portage_tmp_t:lnk_file {read};
 allow initrc_t self:vsock_socket {bind connect create getattr getopt read write};
 allow initrc_t resolvconf_conf_t:file {open read};
 allow initrc_t var_t:file {open read};
+allow initrc_t sshd_t:unix_stream_socket {getattr};
+allow initrc_t udev_t:netlink_kobject_uevent_socket {getattr};
+allow initrc_t udev_t:unix_stream_socket {getattr};
 allow kernel_t etc_t:file {getattr lock open read};
 allow kernel_t portage_tmp_t:lnk_file {read};
 allow kernel_t self:key {read setattr view write};
@@ -165,9 +165,6 @@ allow getty_t getty_runtime_t:file {watch};
 allow ssh_keygen_t proc_t:file {read open getattr};
 allow tmpfiles_t sysctl_kernel_t:dir {search};
 allow tmpfiles_t sysctl_kernel_t:file {read open};
-allow initrc_t sshd_t:unix_stream_socket {getattr};
-allow initrc_t udev_t:netlink_kobject_uevent_socket {getattr};
-allow initrc_t udev_t:unix_stream_socket {getattr};
 allow udevadm_t console_device_t:chr_file {read write};
 allow udevadm_t init_t:fd {use};
 
