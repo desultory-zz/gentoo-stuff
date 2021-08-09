@@ -90,7 +90,7 @@ require {
     class key {read setattr view write};
     class filesystem {getattr};
     class netlink_generic_socket {bind create getattr read write};
-    class netlink_route_socket {getattr};
+    class netlink_route_socket {bind getattr reate nlmsg_read read write};
     class packet_socket {getattr};
     class rawip_socket {getattr};
     class netlink_kobject_uevent_socket {getattr};
@@ -98,7 +98,7 @@ require {
     class process {signull signal getcap setcap getpgid};
     class unix_dgram_socket {getattr sendto read write ioctl create connect};
     class unix_stream_socket {getattr sendto read write ioctl create connect};
-    class udp_socket {create getattr read write node_bind name_bind};
+    class udp_socket {bind connect setopt create getattr read write node_bind name_bind};
     class tcp_socket {create};
     class sock_file {write};
 }
