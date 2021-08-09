@@ -59,6 +59,7 @@ require {
     type ntpd_t;
     type ntpd_exec_t;
     type ntpd_initrc_exec_t;
+    type syslogd_t;
 
     type logrotate_t;
     type var_lib_t;
@@ -90,12 +91,12 @@ require {
     class key {read setattr view write};
     class filesystem {getattr};
     class netlink_generic_socket {bind create getattr read write};
-    class netlink_route_socket {bind getattr reate nlmsg_read read write};
+    class netlink_route_socket {create bind getattr reate nlmsg_read read write};
     class packet_socket {getattr};
     class rawip_socket {getattr};
     class netlink_kobject_uevent_socket {getattr};
     class netlink_audit_socket {getattr};
-    class process {signull signal getcap setcap getpgid};
+    class process {setrlimit signull signal getcap setcap getpgid};
     class unix_dgram_socket {getattr sendto read write ioctl create connect};
     class unix_stream_socket {getattr sendto read write ioctl create connect};
     class udp_socket {bind connect setopt create getattr read write node_bind name_bind};
