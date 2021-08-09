@@ -58,7 +58,7 @@ require {
     type ntp_initrc_exec_t;
     type ntp_pid_t;
     type ntpd_t;
-
+    type ntpd_exec_t;
 
     type logrotate_t;
     type var_lib_t;
@@ -83,7 +83,7 @@ require {
     class lnk_file {read rename unlink create getattr};
     class capability {sys_tty_config dac_read_search};
     class system {module_request};
-    class dir {add_name getattr create remove_name rmdir watch write search mounton read};
+    class dir {open add_name getattr create remove_name rmdir watch write search mounton read};
     class file {execute execute_no_trans link setattr create open read lock write rename unlink getattr map ioctl watch};
     class vsock_socket {bind connect create getattr getopt read write};
     class unix_stream_socket {getattr connectto};
@@ -95,11 +95,10 @@ require {
     class rawip_socket {getattr};
     class netlink_kobject_uevent_socket {getattr};
     class netlink_audit_socket {getattr};
-    class udp_socket {node_bind};
     class process {signull signal getcap setcap getpgid};
     class unix_dgram_socket {getattr sendto read write ioctl create connect};
     class unix_stream_socket {getattr sendto read write ioctl create connect};
-    class udp_socket {create getattr read write};
+    class udp_socket {create getattr read write node_bind name_bind};
     class tcp_socket {create};
     class sock_file {write};
 }
