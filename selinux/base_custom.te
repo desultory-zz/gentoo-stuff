@@ -1,4 +1,4 @@
-module base_custom 3.1;
+module base_custom 3.2;
 #basic policy for minimal gentoo systems running initrc
 
 require {
@@ -50,6 +50,15 @@ require {
     type resolvconf_conf_t;
     type sshd_t;
     type ssh_keygen_t;
+    type cgroup_t;
+    type default_context_t;
+    type ntp_drift_t;
+    type ntp_port_t;
+    type ntp_exec_t;
+    type ntp_initrc_exec_t;
+    type ntp_pid_t;
+    type ntpd_t;
+
 
     type logrotate_t;
     type var_lib_t;
@@ -71,11 +80,11 @@ require {
 
     class chr_file {open read write getattr setattr ioctl open};
     class fd {use};
-    class lnk_file {read rename unlink create};
+    class lnk_file {read rename unlink create getattr};
     class capability {sys_tty_config dac_read_search};
     class system {module_request};
     class dir {add_name getattr create remove_name rmdir watch write search mounton read};
-    class file {link setattr create open read lock write rename unlink getattr map ioctl watch};
+    class file {execute execute_no_trans link setattr create open read lock write rename unlink getattr map ioctl watch};
     class vsock_socket {bind connect create getattr getopt read write};
     class unix_stream_socket {getattr connectto};
     class key {read setattr view write};
@@ -87,8 +96,11 @@ require {
     class netlink_kobject_uevent_socket {getattr};
     class netlink_audit_socket {getattr};
     class udp_socket {node_bind};
-    class process {signal getcap setcap getpgid};
-    class unix_dgram_socket {getattr sendto read write ioctl create};
+    class process {signull signal getcap setcap getpgid};
+    class unix_dgram_socket {getattr sendto read write ioctl create connect};
+    class unix_stream_socket {getattr sendto read write ioctl create connect};
+    class udp_socket {create getattr read write};
+    class tcp_socket {create};
     class sock_file {write};
 }
 
@@ -112,14 +124,6 @@ allow logrotate_t var_lib_t:file {setattr create open write rename unlink write}
 allow logrotate_t system_cronjob_tmp_t:file {ioctl};
 
 #DHCP
-allow dhcpc_script_t dhcpc_t:unix_dgram_socket {read write ioctl};
-allow dhcpc_script_t sysctl_kernel_t: dir {search read};
-allow dhcpc_script_t devlog_t:sock_file {write};
-allow dhcpc_script_t dhcpc_t:unix_dgram_socket {getattr};
-allow dhcpc_script_t locale_t:file {read};
-allow dhcpc_script_t self:unix_dgram_socket {create};
-allow dhcpc_script_t sysctl_kernel_t: file {read};
-allow dhcpc_script_t sysctl_kernel_t:file {ioctl open write};
 allow dhcpc_t nsfs_t:file {getattr};
 allow dhcpc_t self:unix_dgram_socket {sendto};
 allow auditctl_t proc_t:filesystem {getattr};
@@ -133,7 +137,53 @@ allow initrc_t dhcpc_t:netlink_route_socket {getattr};
 allow initrc_t dhcpc_t:packet_socket {getattr};
 allow initrc_t dhcpc_t:rawip_socket {getattr};
 allow initrc_t dhcpc_t:unix_stream_socket {getattr};
-
+allow dhcpc_script_t dhcpc_t:unix_dgram_socket {read write ioctl};
+allow dhcpc_script_t sysctl_kernel_t: dir {search read};
+allow dhcpc_script_t devlog_t:sock_file {write};
+allow dhcpc_script_t dhcpc_t:unix_dgram_socket {getattr};
+allow dhcpc_script_t locale_t:file {read getattr map open};
+allow dhcpc_script_t locale_t:dir {search};
+allow dhcpc_script_t self:unix_dgram_socket {connect ioctl write create};
+allow dhcpc_script_t sysctl_kernel_t: file {read};
+allow dhcpc_script_t sysctl_kernel_t:file {ioctl open write};
+allow dhcpc_script_t cgroup_t:dir {getattr open read remove_name rmdir search write};
+allow dhcpc_script_t cgroup_t:file {getattr ioctl open read write};
+allow dhcpc_script_t default_context_t:dir {search};
+allow dhcpc_script_t default_context_t:file {getattr open read};
+allow dhcpc_script_t init_t:dir {search};
+allow dhcpc_script_t init_t:file {getattr open read};
+allow dhcpc_script_t initrc_state_t:dir {add_name getattr open read remove_name search write};
+allow dhcpc_script_t initrc_state_t:file {create getattr open read unlink write};
+allow dhcpc_script_t initrc_state_t:lnk_file {getattr read};
+allow dhcpc_script_t kernel_t:system {module_request};
+allow dhcpc_script_t node_t:udp_socket {node_bind};
+allow dhcpc_script_t nsfs_t:file {getattr};
+allow dhcpc_script_t ntp_drift_t:dir {search};
+allow dhcpc_script_t ntp_drift_t:file {getattr open read};
+allow dhcpc_script_t ntp_port_t:udp_socket {name_bind};
+allow dhcpc_script_t ntpd_exec_t:file {execute execute_no_trans getattr map open read};
+allow dhcpc_script_t ntpd_initrc_exec_t:file {execute execute_no_trans getattr open read};
+allow dhcpc_script_t ntpd_pid_t:file {getattr open read unlink};
+allow dhcpc_script_t ntpd_t:dir {search};
+allow dhcpc_script_t ntpd_t:file {read};
+allow dhcpc_script_t ntpd_t:lnk_file {read];
+allow dhcpc_script_t ntpd_t:process {signal signull};
+allow dhcpc_script_t proc_t:filesystem {getattr};
+allow dhcpc_script_t self:capability {dac_override kill net_bind_service setgid setuid sys_ptrace sys_resource sys_time};
+allow dhcpc_script_t self:netlink_route_socket {bind create getattr nlmsg_read read write};
+allow dhcpc_script_t self:process {setcap setrlimit signal signull};
+allow dhcpc_script_t self:tcp_socket {create};
+allow dhcpc_script_t self:udp_socket {bind connect create getattr read setopt write};
+allow dhcpc_script_t self:unix_stream_socket {create read write};
+allow dhcpc_script_t syslogd_t:unix_dgram_socket {sendto};
+allow dhcpc_script_t var_lib_t:dir {search};
+allow resolvconf_t self:process {signull};
+allow run_init_t init_t:dir {search};
+allow run_init_t init_t:file {getattr open};
+allow run_init_t initrc_state_t:file {getattr open read};
+allow run_init_t proc_t:filesystem {getattr};
+allow run_init_t sysctl_kernel_t:dir {search};
+allow run_init_t sysctl_kernel_t:file {open read};
 
 #booting
 allow lvm_t device_t:chr_file {open read write};
