@@ -16,7 +16,7 @@ require {
 	
 	class tcp_socket {node_bind};
 	class dir {add_name create getattr remove_name search watch write};
-	class file {append create execute ioctl lock map open read rename unlink write}
+	class file {append create execute ioctl lock map open read rename unlink write};
 }
 
 allow initrc_t node_t:tcp_socket {node_bind};
