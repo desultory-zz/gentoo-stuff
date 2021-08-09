@@ -1,0 +1,35 @@
+module samba_custom 1.0;
+#policy for smb AD DS server
+
+require {
+	type initrc_t;
+	type node_t;
+	type public_content_rw_t;
+	type samba_log_t;
+	type samba_var_t;
+	type kernel_t;
+	type nfsd_fs_t;
+	type smbd_t;
+	type winbind_t;
+	type var_lock_t;
+	
+	
+	class tcp_socket {node_bind};
+	class dir {add_name create getattr remove_name search watch write};
+	class file {append create execute ioctl lock map open read rename unlink write}
+}
+
+allow initrc_t node_t:tcp_socket {node_bind};
+allow initrc_t public_content_rw_t:dir {add_name create remove_name watch write};
+allow initrc_t public_content_rw_t:file {append create execute ioctl map open read rename unlink write};
+allow initrc_t samba_log_t:dir {add_name remove_name write};
+allow initrc_t samba_log_t:file {create rename unlink};
+allow initrc_t samba_var_t:file {ioctl lock map open read write};
+allow kernel_t nfsd_fs_t:dir {search};
+allow kernel_t nfsd_fs_t:file {open write};
+allow kernel_t public_content_rw_t:file {execute};
+allow semanage_t public_content_rw_t:dir {search};
+allow smbd_t public_content_rw_t:dir {watch};
+allow winbind_t var_lock_t:dir {add_name getattr search write};
+allow winbind_t var_lock_t:file {create lock open read write};
+allow winbind_t var_lock_t:lnk_file {read};
