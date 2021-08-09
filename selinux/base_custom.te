@@ -81,7 +81,7 @@ require {
     class chr_file {open read write getattr setattr ioctl open};
     class fd {use};
     class lnk_file {read rename unlink create getattr};
-    class capability {sys_tty_config dac_read_search};
+    class capability {dac_override sys_tty_config dac_read_search};
     class system {module_request};
     class dir {open add_name getattr create remove_name rmdir watch write search mounton read};
     class file {execute execute_no_trans link setattr create open read lock write rename unlink getattr map ioctl watch};
