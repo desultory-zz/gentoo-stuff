@@ -1,4 +1,4 @@
-module dns_cron 1.0;
+module dns_cron 2.0;
 #selinux policy for cron job to reload adblock zones
 
 require {
@@ -68,3 +68,7 @@ allow system_mail_t var_spool_t:file {link read unlink};
 
 allow crond_t user_home_t:dir {getattr open read search};
 allow crond_t user_home_t:file {getattr ioctl open read};
+
+allow system_cronjob_t dnssec_t:file {getattr open read};
+allow system_cronjob_t named_zone_t:file {open read};
+allow system_cronjob_t named_zone_t:lnk_file {read};
