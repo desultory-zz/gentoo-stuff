@@ -9,6 +9,7 @@ require {
 	type samba_var_t;
 	type kernel_t;
 	type nfsd_fs_t;
+	type semanage_t;
 	type smbd_t;
 	type winbind_t;
 	type var_lock_t;
