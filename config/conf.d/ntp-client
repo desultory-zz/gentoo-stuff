@@ -1,0 +1,3 @@
+#/etc/conf.d/ntp-client
+NTPCLIENT_CMD="ntpdate"
+NTPCLIENT_OPTS="-s -b -u 10.64.128.1"
