@@ -14,7 +14,7 @@ require {
 	type winbind_t;
 	type var_lock_t;
 	
-	
+	class lnk_file {read};	
 	class tcp_socket {node_bind};
 	class dir {add_name create getattr remove_name search watch write};
 	class file {append create execute ioctl lock map open read rename unlink write};
