@@ -53,10 +53,9 @@ require {
     type cgroup_t;
     type default_context_t;
     type ntp_drift_t;
+    type ntp_drift_file_t;
     type ntp_port_t;
-    type ntp_exec_t;
-    type ntp_initrc_exec_t;
-    type ntp_pid_t;
+    type ntpd_pid_t;
     type ntpd_t;
     type ntpd_exec_t;
     type ntpd_initrc_exec_t;
