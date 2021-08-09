@@ -21,6 +21,7 @@ require {
     type system_mail_t;
     type var_spool_t;
     type user_home_t;
+    type system_cronjob_t;
 
     class dir {add_name remove_name write search getattr open read};
     class lnk_file {read};
