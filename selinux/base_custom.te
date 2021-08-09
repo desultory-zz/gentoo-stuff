@@ -1,4 +1,4 @@
-module base_custom 3.2;
+module base_custom 3.3;
 #basic policy for minimal gentoo systems running initrc
 
 require {
@@ -75,6 +75,9 @@ require {
     type faillog_t;
     type hostname_t;
 
+    type rpcd_t;
+    type audisp_remote_exec_t;
+
     type semanage_t;
     type security_t;
     type setfiles_t;
@@ -82,7 +85,7 @@ require {
     class chr_file {open read write getattr setattr ioctl open};
     class fd {use};
     class lnk_file {read rename unlink create getattr};
-    class capability {dac_override kill net_bind_service setgid setuid sys_ptrace sys_resource sys_time sys_tty_config dac_read_search};
+    class capability {dac_override kill net_bind_service setgid setuid sys_ptrace sys_resource sys_time sys_tty_config dac_read_search chown};
     class system {module_request};
     class dir {open add_name getattr create remove_name rmdir watch write search mounton read};
     class file {execute execute_no_trans link setattr create open read lock write rename unlink getattr map ioctl watch};
@@ -126,6 +129,7 @@ allow logrotate_t system_cronjob_tmp_t:file {ioctl};
 
 #DHCP
 allow dhcpc_t nsfs_t:file {getattr};
+allow dhcpc_t self:capability {chown};
 allow dhcpc_t self:unix_dgram_socket {sendto};
 allow auditctl_t proc_t:filesystem {getattr};
 allow hostname_t dhcpc_t:unix_dgram_socket {read write};
@@ -218,6 +222,8 @@ allow tmpfiles_t sysctl_kernel_t:dir {search};
 allow tmpfiles_t sysctl_kernel_t:file {read open};
 allow udevadm_t console_device_t:chr_file {read write};
 allow udevadm_t init_t:fd {use};
+allow rpcd_t self:capability {dac_read_search};
+allow auditd_t audisp_remote_exec_t:file {getattr};
 
 #wg connect
 allow initrc_t self:netlink_generic_socket {bind create getattr read write};
