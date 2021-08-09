@@ -16,6 +16,7 @@ require {
 	type run_init_t;
 	type security_t;
 	type sysctl_kernel_t;
+	type rpcd_t;
 
 	type sysadm_t;
 	type httpd_log_t;
@@ -26,6 +27,7 @@ require {
         class chr_file {map read write open};
         class fd {use};
         class dir {create write add_name remove_name search};
+	class capability {dac_read_search};
 }
 
 
@@ -41,6 +43,7 @@ allow httpd_t device_t:chr_file {read open};
 allow run_init_t init_t:dir {search};
 allow run_init_t security_t:file {map};
 allow run_init_t sysctl_kernel_t:dir {search};
+allow rpcd_t self:capability {dac_read_search};
 
 #for imagehost
 allow httpd_t nfs_t:dir {create write add_name remove_name};
