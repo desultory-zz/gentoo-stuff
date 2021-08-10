@@ -63,6 +63,7 @@ allow initrc_t node_t:tcp_socket {node_bind};
 allow initrc_t public_content_rw_t:dir {add_name create remove_name rename rmdir watch write};
 allow initrc_t public_content_rw_t:file {append create execute ioctl lock setattr map open read rename unlink write};
 allow initrc_t public_content_rw_t:lnk_file {read};
+allow initrc_t self:unix_dgram_socket {sendto};
 allow initrc_t samba_runtime_t:sock_file {create};
 allow initrc_t samba_log_t:dir {add_name remove_name write};
 allow initrc_t samba_log_t:file {create rename unlink};
