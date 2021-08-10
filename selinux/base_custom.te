@@ -62,6 +62,7 @@ require {
 
     type logrotate_t;
     type var_lib_t;
+    type var_log_t;
     type system_cronjob_t;
     type system_cron_spool_t;
     type system_cronjob_tmp_t;
