@@ -245,8 +245,8 @@ allow run_init_t init_t:file {read};
 allow chkpwd_t sysctl_kernel_t:dir {search};
 allow chkpwd_t sysctl_kernel_t:file {read open};
 allow chkpwd_t proc_t:filesystem {getattr};
-allow sshd_t var_log_t:dir {write};
-allow sshd_t var_log_t:dir {add_name};
+allow sshd_t var_log_t:dir {add_name write};
+allow sshd_t var_log_t:file {create getattr lock open read write};
 
 #sudo
 allow staff_sudo_t staff_t:dir {search};
