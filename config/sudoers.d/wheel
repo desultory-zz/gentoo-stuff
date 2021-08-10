@@ -1,0 +1,2 @@
+#/etc/sudoers.d/wheel
+%wheel ALL=(ALL) ROLE=sysadm_r TYPE=sysadm_t ALL
