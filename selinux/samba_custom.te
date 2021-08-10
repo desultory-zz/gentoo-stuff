@@ -35,12 +35,12 @@ require {
 	type smbd_t;
 	type winbind_t;
 
-	class lnk_file {read};	
 	class capability {dac_read_search};
 	class dir {add_name create getattr rename remove_name rmdir search watch write};
 	class file {append create execute getattr ioctl lock map open read rename setattr unlink write};
 	class filesystem {getattr};
-	class sock_file {create unlink};
+	class lnk_file {read};	
+	class sock_file {create unlink write};
 	class system {module_request};
 	class tcp_socket {name_bind node_bind};
 	class udp_socket {name_bind};
@@ -68,7 +68,7 @@ allow initrc_t samba_log_t:dir {add_name remove_name write};
 allow initrc_t samba_log_t:file {create rename unlink};
 allow initrc_t samba_var_t:file {create ioctl lock map open read write};
 allow initrc_t samba_var_t:dir {add_name remove_name write};
-allow initrc_t samba_var_t:sock_file {create unlink};
+allow initrc_t samba_var_t:sock_file {create unlink write};
 allow initrc_t unreserved_port_t:tcp_socket {name_bind};
 allow initrc_t unreserved_port_t:udp_socket {name_bind};
 allow initrc_t var_lock_t:file {map};
