@@ -28,6 +28,7 @@ require {
 	type samba_var_t;
 	type semanage_t;
 	type sysadm_t;
+	type system_dbusd_t;
 	type unreserved_port_t;
 	type var_lock_t;
 	type smbd_t;
@@ -36,7 +37,7 @@ require {
 	class lnk_file {read};	
 	class capability {dac_read_search};
 	class dir {add_name create getattr rename remove_name rmdir search watch write};
-	class file {append create execute ioctl lock map open read rename setattr unlink write};
+	class file {append create execute getattr ioctl lock map open read rename setattr unlink write};
 	class filesystem {getattr};
 	class sock_file {create unlink};
 	class system {module_request};
