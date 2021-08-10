@@ -125,6 +125,8 @@ allow system_cronjob_t faillog_t:file {create lock open read setattr write};
 allow logrotate_t system_cronjob_tmp_t:file {read write};
 allow logrotate_t var_lib_t:file {setattr create open write rename unlink write};
 allow logrotate_t system_cronjob_tmp_t:file {ioctl};
+allow system_cronjob_t initrc_state_t:file {read};
+allow system_mail_t var_spool_t:file {unlink};
 
 
 #DHCP
