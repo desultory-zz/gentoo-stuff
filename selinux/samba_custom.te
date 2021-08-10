@@ -26,6 +26,7 @@ require {
 	type samba_log_t;
 	type samba_runtime_t;
 	type samba_var_t;
+	type security_t;
 	type semanage_t;
 	type sysadm_t;
 	type system_dbusd_t;
