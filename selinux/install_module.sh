@@ -12,29 +12,29 @@ fi
 
 name=$1
 rand=$RANDOM
+randmame=$name-$rand
 
 if [[ -f $name ]]; then
-	tr -d '\r' < $name > $name-$rand
+	tr -d '\r' < $name > $randname
 	name=$(echo "$name" | cut -f 1 -d '.')
 elif [[ -f "$name.te" ]]; then
-	tr -d '\r' < $name.te > $name-$rand
+	tr -d '\r' < $name.te > $randname
 else
 	echo "$name.te not found"
 	exit 1
 fi
-name=$name-$rand
 
-checkmodule -M -m -o $name.mod $name
+checkmodule -M -m -o $randname.mod $randname
 ret=$?
-rm $name-converted
+rm $randname
 if [[ $ret -eq 0 ]]; then
-	semodule_package -m $name.mod -o $name.pp
+	semodule_package -m $randname.mod -o $randname.pp
 	ret=$?
-	rm $name.mod
+	rm $randname.mod
 	if [[ $ret -eq 0 ]]; then
-		semodule -i $name.pp
-		 ret=$?
-		rm $name.pp
+		semodule -i $randname.pp
+		ret=$?
+		rm $randname.pp
 		if [[ $ret -ne 0 ]]; then
 			echo "Failed to install package"
 			exit 1
