@@ -11,19 +11,20 @@ if [[ "$1" == "-h" ]]; then
 fi
 
 name=$1
+rand=$RANDOM
 
 if [[ -f $name ]]; then
+	tr -d '\r' < $name > $name-$rand
 	name=$(echo "$name" | cut -f 1 -d '.')
-fi
-
-if [[ -f "$name.te" ]]; then
-	tr -d '\r' < $name.te > $name-converted
+elif [[ -f "$name.te" ]]; then
+	tr -d '\r' < $name.te > $name-$rand
 else
 	echo "$name.te not found"
 	exit 1
 fi
+name=$name-$rand
 
-checkmodule -M -m -o $name.mod $name-converted
+checkmodule -M -m -o $name.mod $name
 ret=$?
 rm $name-converted
 if [[ $ret -eq 0 ]]; then
