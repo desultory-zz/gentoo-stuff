@@ -12,19 +12,18 @@ fi
 
 name=$1
 
-if [[ ! -f $name ]]; then
+if [[ -f $name ]]; then
+	filename=$name
 	name=$(echo "$name" | cut -f 1 -d '.')
-	name=$name.te
-fi
+else
+	filename=$name.te
 
-if [[ ! -f $name ]]; then
-	echo "File $name not found"
+if [[ ! -f $filename ]]; then
+	echo "File $filename not found"
 	exit 1
 fi
 
-echo $name
-
-checkmodule -M -m -o $name.mod $name
+checkmodule -M -m -o $name.mod $filename
 ret=$?
 if [[ $ret -eq 0 ]]; then
 	semodule_package -m $name.mod -o $name.pp
