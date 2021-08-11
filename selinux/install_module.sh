@@ -14,35 +14,35 @@ name=$1
 
 if [[ ! -f $name ]]; then
 	name=$(echo "$name" | cut -f 1 -d '.')
-else
-	name=$name.te
 fi
 
-if [[ -f $name ]]; then
-	checkmodule -M -m -o $name.mod $name.te
+name=$name.te
+
+if [[ ! -f $name ]]; then
+	echo "File $name not found"
+	exit 1
+fi
+
+checkmodule -M -m -o $name.mod $name.te
+ret=$?
+if [[ $ret -eq 0 ]]; then
+	semodule_package -m $name.mod -o $name.pp
 	ret=$?
+	rm $name.mod
 	if [[ $ret -eq 0 ]]; then
-		semodule_package -m $name.mod -o $name.pp
+		semodule -i $name.pp
 		ret=$?
-		rm $name.mod
-		if [[ $ret -eq 0 ]]; then
-			semodule -i $name.pp
-			ret=$?
-			rm $name.pp
-			if [[ $ret -ne 0 ]]; then
-				echo "Failed to install package"
-				exit 1
-			fi
-		else
-			echo "Failed to package module"
+		rm $name.pp
+		if [[ $ret -ne 0 ]]; then
+			echo "Failed to install package"
 			exit 1
 		fi
 	else
-		echo "Failed to create module"
+		echo "Failed to package module"
 		exit 1
 	fi
 else
-	echo "$name.te not found"
+	echo "Failed to create module"
 	exit 1
 fi
 
