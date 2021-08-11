@@ -12,7 +12,7 @@ fi
 
 name=$1
 rand=$RANDOM
-randmame=$name-$rand
+randname=$name-$rand
 
 if [[ -f $name ]]; then
 	tr -d '\r' < $name > $randname
