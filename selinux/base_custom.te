@@ -165,7 +165,7 @@ allow dhcpc_script_t initrc_state_t:lnk_file {getattr read};
 allow dhcpc_script_t kernel_t:system {module_request};
 allow dhcpc_script_t node_t:udp_socket {node_bind};
 allow dhcpc_script_t nsfs_t:file {getattr};
-allow dhcpc_script_t ntp_drift_t:dir {search};
+allow dhcpc_script_t ntp_drift_t:dir {search write};
 allow dhcpc_script_t ntp_drift_t:file {getattr open read};
 allow dhcpc_script_t ntp_port_t:udp_socket {name_bind};
 allow dhcpc_script_t ntpd_exec_t:file {execute execute_no_trans getattr map open read};
@@ -257,6 +257,8 @@ allow staff_sudo_t staff_t:file {open read};
 allow staff_sudo_t proc_t:filesystem {getattr};
 allow staff_sudo_t staff_t:process {getpgid};
 allow staff_sudo_t sysadm_t:process {signal};
+allow local_login_t var_log_t:file {read write};
+allow staff_sudo_t local_login_t:dir {search};
 
 #semanage
 allow semanage_t proc_t:filesystem {getattr};
