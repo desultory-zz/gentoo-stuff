@@ -11,6 +11,7 @@ require {
 	type rndc_port_t;
 	type user_home_t;
 	type var_spool_t;
+	type system_mail_t;
 
 	class file {append create ioctl open read rename setattr unlink write};
 	class tcp_socket {name_connect node_bind};
