@@ -14,7 +14,9 @@ name=$1
 
 if [[ -f $name ]]; then
 	name=$(echo "$name" | cut -f 1 -d '.')
-elif [[ -f "$name.te" ]]; then
+fi
+
+if [[ -f "$name.te" ]]; then
 	checkmodule -M -m -o $name.mod $name.te
 	ret=$?
 	if [[ $ret -eq 0 ]]; then
