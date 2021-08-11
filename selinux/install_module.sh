@@ -22,6 +22,8 @@ if [[ ! -f $name ]]; then
 	exit 1
 fi
 
+echo $name
+
 checkmodule -M -m -o $name.mod $name
 ret=$?
 if [[ $ret -eq 0 ]]; then
