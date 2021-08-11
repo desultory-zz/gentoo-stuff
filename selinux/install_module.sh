@@ -14,9 +14,8 @@ name=$1
 
 if [[ ! -f $name ]]; then
 	name=$(echo "$name" | cut -f 1 -d '.')
+	name=$name.te
 fi
-
-name=$name.te
 
 if [[ ! -f $name ]]; then
 	echo "File $name not found"
