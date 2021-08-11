@@ -17,6 +17,7 @@ if [[ -f $name ]]; then
 	name=$(echo "$name" | cut -f 1 -d '.')
 else
 	filename=$name.te
+fi
 
 if [[ ! -f $filename ]]; then
 	echo "File $filename not found"
