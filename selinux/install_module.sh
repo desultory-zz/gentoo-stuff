@@ -23,7 +23,7 @@ if [[ ! -f $name ]]; then
 	exit 1
 fi
 
-checkmodule -M -m -o $name.mod $name.te
+checkmodule -M -m -o $name.mod $name
 ret=$?
 if [[ $ret -eq 0 ]]; then
 	semodule_package -m $name.mod -o $name.pp
