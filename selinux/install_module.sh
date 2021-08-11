@@ -12,11 +12,13 @@ fi
 
 name=$1
 
-if [[ -f $name ]]; then
+if [[ ! -f $name ]]; then
 	name=$(echo "$name" | cut -f 1 -d '.')
+else
+	name=$name.te
 fi
 
-if [[ -f "$name.te" ]]; then
+if [[ -f $name ]]; then
 	checkmodule -M -m -o $name.mod $name.te
 	ret=$?
 	if [[ $ret -eq 0 ]]; then
