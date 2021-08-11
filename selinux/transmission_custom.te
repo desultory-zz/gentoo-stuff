@@ -10,14 +10,15 @@ require {
         type init_t;
 
         class tcp_socket {node_bind name_bind};
-        class file {getattr open read create write};
-        class dir {search rename};
+        class file {getattr open read rename create write};
+        class dir {add_name create search remove_name rename rmdir write};
 }
 
-allow initrc_t node_t:tcp_socket node_bind;
-allow initrc_t unreserved_port_t:tcp_socket name_bind;
-allow initrc_t nfs_t:file {create open read write};
-allow initrc_t nfs_t:dir {rename};
-allow run_init_t init_t:dir search;
-allow run_init_t init_t:file { getattr open read };
-allow run_init_t initrc_state_t:file { getattr open read };
+allow initrc_t node_t:tcp_socket {node_bind};
+allow initrc_t unreserved_port_t:tcp_socket {name_bind};
+allow initrc_t nfs_t:file {create open read rename write};
+allow initrc_t nfs_t:dir {add_name create search remove_name rename rmdir write};
+allow run_init_t init_t:dir {search};
+allow run_init_t init_t:file {getattr open read};
+allow run_init_t initrc_state_t:file {getattr open read};
+
