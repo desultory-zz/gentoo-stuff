@@ -15,7 +15,7 @@ require {
 	class file {append create ioctl open read rename setattr unlink write};
 	class tcp_socket {name_connect node_bind};
 	class system {module_request};
-	class dir {add_name remove_name write}
+	class dir {add_name remove_name write};
 	class lnk_file {read};
 	class fifo_file {open write};
 }
