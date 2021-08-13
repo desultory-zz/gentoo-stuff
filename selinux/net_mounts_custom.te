@@ -6,7 +6,6 @@ require {
 	type kernel_t;
 	type mount_t;
 	type nfs_t;
-	type sysadm_t;
 	type rpcbind_t;
 	type rpcd_t;
 	type rpc_pipefs_t;
@@ -24,4 +23,3 @@ allow initrc_t nfs_t:file {open read rename unlink};
 allow kernel_t rpcbind_t:unix_stream_socket {connectto};
 allow mount_t rpcbind_runtime_t:sock_file {write};
 allow rpcd_t rpc_pipefs_t:dir {watch};
-allow sysadm_t nsfs_t:file {getattr};
