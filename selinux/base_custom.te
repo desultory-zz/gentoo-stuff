@@ -229,8 +229,6 @@ allow udevadm_t init_t:fd {use};
 allow auditd_t audisp_remote_exec_t:file {getattr};
 allow mount_t dosfs_t:filesystem {getattr};
 allow tmpfiles_t syslogd_t:unix_dgram_socket {sendto};
-allow mount_t rpcbind_runtime_t:sock_file {write};
-allow rpcd_t rpc_pipefs_t:dir {watch};
 allow sysadm_t nsfs_t:file {getattr};
 allow initrc_t nfs_t:dir {watch};
 allow initrc_t rpcbind_t:unix_stream_socket {getattr};
