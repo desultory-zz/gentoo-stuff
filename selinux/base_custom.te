@@ -237,7 +237,7 @@ allow mount_t rpcbind_runtime_t:sock_file {write};
 allow rpcd_t rpc_pipefs_t:dir {watch};
 allow sysadm_t nsfs_t:file {getattr};
 allow tmpfiles_t syslogd_t:unix_dgram_socket {sendto};
-
+allow initrc_t nfs_t:dir {watch};
 
 #wg connect
 allow initrc_t self:netlink_generic_socket {bind create getattr read write};
