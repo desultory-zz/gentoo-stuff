@@ -82,6 +82,11 @@ require {
     type security_t;
     type setfiles_t;
 
+    type rpcbind_t;
+    type rpcbind_runtime_t;
+    type rpcd_t;
+    type rpc_pipefs_t;
+
     class chr_file {open read write getattr setattr ioctl open};
     class fd {use};
     class lnk_file {read rename unlink create getattr};
@@ -225,6 +230,13 @@ allow tmpfiles_t sysctl_kernel_t:file {read open};
 allow udevadm_t console_device_t:chr_file {read write};
 allow udevadm_t init_t:fd {use};
 allow auditd_t audisp_remote_exec_t:file {getattr};
+allow kernel_t rpcbind_t:unix_stream_socket connectto;
+allow mount_t dosfs_t:filesystem {getattr};
+allow mount_t rpcbind_runtime_t:sock_file {write};
+allow rpcd_t rpc_pipefs_t:dir {watch};
+allow sysadm_t nsfs_t:file {getattr};
+allow tmpfiles_t syslogd_t:unix_dgram_socket {sendto};
+
 
 #wg connect
 allow initrc_t self:netlink_generic_socket {bind create getattr read write};
