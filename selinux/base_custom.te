@@ -230,8 +230,6 @@ allow auditd_t audisp_remote_exec_t:file {getattr};
 allow mount_t dosfs_t:filesystem {getattr};
 allow tmpfiles_t syslogd_t:unix_dgram_socket {sendto};
 allow sysadm_t nsfs_t:file {getattr};
-allow initrc_t nfs_t:dir {watch};
-allow initrc_t rpcbind_t:unix_stream_socket {getattr};
 
 #wg connect
 allow initrc_t self:netlink_generic_socket {bind create getattr read write};
