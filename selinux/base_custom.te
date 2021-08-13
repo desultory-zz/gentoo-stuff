@@ -86,6 +86,7 @@ require {
     type rpcbind_runtime_t;
     type rpcd_t;
     type rpc_pipefs_t;
+    type dosfs_t;
 
     class chr_file {open read write getattr setattr ioctl open};
     class fd {use};
