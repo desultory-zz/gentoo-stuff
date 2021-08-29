@@ -1,17 +1,20 @@
 module transmission_custom 2.0;
 
 require {
-        type initrc_t;
-        type node_t;
-        type unreserved_port_t;
-        type nfs_t;
-        type run_init_t;
-        type initrc_state_t;
         type init_t;
+        type initrc_t;
+        type initrc_state_t;
+	type kernel_t;
+        type nfs_t;
+        type node_t;
+        type run_init_t;
+	type sysadm_t;
+        type unreserved_port_t;
 
-        class tcp_socket {node_bind name_bind};
-        class file {getattr open read rename create unlink write};
         class dir {add_name create search remove_name rename rmdir write};
+        class file {getattr open read rename create unlink write};
+	class system {module_request};
+        class tcp_socket {node_bind name_bind};
 }
 
 allow initrc_t node_t:tcp_socket {node_bind};
@@ -21,4 +24,5 @@ allow initrc_t nfs_t:dir {add_name create search remove_name rename rmdir write}
 allow run_init_t init_t:dir {search};
 allow run_init_t init_t:file {getattr open read};
 allow run_init_t initrc_state_t:file {getattr open read};
-
+allow sysadm_t kernel_t:system {module_request};
+allow sysadm_t node_t:tcp_socket {node_bind};
