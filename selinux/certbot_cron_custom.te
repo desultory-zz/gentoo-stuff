@@ -13,7 +13,7 @@ require {
 	class file {create execute execute_no_trans ioctl map open rename setattr unlink};
 	class fifo_file {open unlink wirte};
 	class process {setcap};
-	class tpc_socket {name_connect};
+	class tcp_socket {name_connect};
 }
 
 allow system_cronjob_t http_port_t:tcp_socket {name_connect};
