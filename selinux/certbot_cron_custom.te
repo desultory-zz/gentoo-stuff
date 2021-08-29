@@ -1,0 +1,25 @@
+module certbot_cron_custom 2.0;
+#module to allow for certbot to run in a nfs share from the cron folders
+
+require {
+	type http_port_t;
+	type nfs_t;
+	type user_home_t; #for the local bin
+	type system_cronjob_t;
+	type system_mail_t;
+	type var_spool_t;
+
+	class dir {add_name create remove_name rmdir write};
+	class file {create execute execute_no_trans ioctl map open rename setattr unlink};
+	class fifo_file {open unlink wirte};
+	class process {setcap};
+	calss tpc_socket {name_connect};
+}
+
+allow system_cronjob_t http_port_t:tcp_socket {name_connect};
+allow system_cronjob_t nfs_t:dir {add_name create remove_name rmdir write};
+allow system_cronjob_t nfs_t:file {create execute execute_no_trans rename setattr unlink};
+allow system_cronjob_t self:process {setcap};
+allow system_cronjob_t user_home_t:file {execute execute_no_trans ioctl map open read};
+allow system_mail_t var_spool_t:fifo_file {open write};
+allow system_mail_t var_spool_t:file {unlink};
