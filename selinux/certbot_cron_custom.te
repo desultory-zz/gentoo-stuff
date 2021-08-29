@@ -11,7 +11,7 @@ require {
 
 	class dir {add_name create remove_name rmdir write};
 	class file {create execute execute_no_trans ioctl map open read rename setattr unlink};
-	class fifo_file {open unlink wirte};
+	class fifo_file {open unlink write};
 	class process {setcap};
 	class tcp_socket {name_connect};
 }
