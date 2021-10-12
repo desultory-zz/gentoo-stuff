@@ -3,6 +3,7 @@ module base_custom 3.3;
 
 require {
 	type auditctl_t;
+	type auditd_t;
 	type getty_t;
 	type initrc_t;
 	type kernel_t;
