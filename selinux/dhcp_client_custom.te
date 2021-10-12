@@ -1,0 +1,40 @@
+module dhcp_client_custom 1.0;
+#policy for dhcp client
+
+require {
+	type dhcpc_t;
+	type dhcpc_script_t;
+	type initrc_t;
+	type nsfs_t;
+	type portage_tmp_t;
+	type resolvconf_t;
+	type sysctl_kernel_t;
+	type tmpfs_t;
+	
+	class capability {chown};
+	class dir {search};
+	class file {getattr ioctl open read};
+	class filesystem {getattr};
+	class lnk_file {read};
+	class netlink_generic_socket {getattr};
+	class netlink_route_socket {getattr};
+	class packet_socket {getattr};
+	class rawip_socket {getattr};
+	class unix_dgram_socket {getattr ioctl read write};
+}
+
+
+allow dhcpc_t nsfs_t:file {getattr};
+allow dhcpc_t portage_tmp_t:lnk_file {read};
+allow dhcpc_t self:capability {chown};
+allow dhcpc_script_t dhcpc_t:unix_dgram_socket {ioctl read write};
+allow dhcpc_script_t portage_tmp_t:lnk_file {read};
+allow dhcpc_script_t sysctl_kernel_t:dir {search};
+allow dhcpc_script_t sysctl_kernel_t:file {ioctl open read};
+allow initrc_t dhcpc_t:netlink_generic_socket {getattr};
+allow initrc_t dhcpc_t:netlink_route_socket {getattr};
+allow initrc_t dhcpc_t:packet_socket {getattr};
+allow initrc_t dhcpc_t:rawip_socket {getattr};
+allow initrc_t dhcpc_t:unix_stream_socket {getattr};
+allow resolvconf_t dhcpc_t:unix_dgram_socket {ioctl read write};
+allow resolvconf_t tmpfs_t:filesystem {getattr};
