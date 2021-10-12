@@ -1,0 +1,15 @@
+module diag_custom 1.0;
+#policy for basic diagnostics
+
+require {
+	type kernet_t;
+	type ping_t;
+	type sysadm_t;
+
+	class netlink_tcpdiag_socket {bind create nlmsg_read read setopt write};	
+	class system {module_request};
+}
+
+allow ping_t kernel_t:system {module_request};
+allow sysadm_t kernel_t:system {module_request};
+allow sysadm_t self:netlink_tcpdiag_socket {bind create nlmsg_read read setopt write};
