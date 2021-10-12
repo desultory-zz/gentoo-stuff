@@ -19,17 +19,22 @@ require {
 	type mount_t;
 	type portage_tmp_t;
 	type proc_t;
+	type semanage_t;
 	type setfiles_t;
 	type sysctl_kernel_t;
+	type system_cronjob_t;
+	type system_mail_t;
 	type tmpfiles_t;
 	type udev_t;
 	type udev_rules_t;
 	type udev_runtime_t;
 	type var_lib_t;
 	type var_log_t;
-	
+	type var_spool_t;
+
+	class capability {dac_read_search};
 	class chr_file {getattr open read setattr write};
-	class dir {mounton search watch};
+	class dir {mounton search watch write};
 	class file {getattr lock open read};
 	class filesystem {getattr};
 	class lnk_file {create read rename unlink};
@@ -38,6 +43,7 @@ require {
 	class unix_stream_socket {getattr};
 }
 
+#booting and general usage
 allow auditctl_t proc_t:filesystem {getattr};
 allow auditd_t audisp_remote_exec_t:file {getattr};
 allow dmesg_t etc_t: file {getattr open read};
@@ -55,6 +61,7 @@ allow kmod_t initrc_tmp_t:file {open read};
 allow kmod_t device_t:chr_file {getattr open read write};
 allow local_login_t var_log_t:file {lock open};
 allow mount_t initrc_tmp_t: dir {mounton};
+allow semanage_t ptoc_t: file {getattr};
 allow setfiles_t proc_t:filesystem {getattr};
 allow setfiles_t sysctl_kernel_t:file {open read};
 allow tmpfiles_t device_t:chr_file {setattr};
@@ -63,3 +70,9 @@ allow tmpfiles_t sysctl_kernel_t:file {open read};
 allow udev_t portage_tmp_t:lnk_file {read};
 allow udev_t udev_rules_t:dir {watch};
 allow udev_t udev_runtime_t:dir {watch};
+
+
+#backround
+allow system_cronjob_t portage_tmp_t:lnk_file {read};
+allow system_mail_t self:capability {dac_read_search};
+allow system_mail_t var_spool_t:dir {write};
