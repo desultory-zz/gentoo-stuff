@@ -16,6 +16,7 @@ require {
 	
 	class dir {search};
 	class file {getattr open read};
+	class filesystem {getattr};
 	class lnk_file {read};
 	class netlink_audit_socket {getattr};
 	class netlink_kobject_uevent_socket {getattr};
