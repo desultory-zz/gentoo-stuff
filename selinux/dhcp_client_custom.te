@@ -40,4 +40,4 @@ allow initrc_t dhcpc_t:rawip_socket {getattr};
 allow initrc_t dhcpc_t:unix_stream_socket {getattr};
 allow resolvconf_t dhcpc_t:unix_dgram_socket {ioctl read write};
 allow resolvconf_t tmpfs_t:filesystem {getattr};
-allow resolvconf_t proc_t:file {open read};
+allow resolvconf_t proc_t:file {getattr open read};
