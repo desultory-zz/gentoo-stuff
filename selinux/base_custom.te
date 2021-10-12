@@ -196,6 +196,7 @@ allow run_init_t sysctl_kernel_t:file {open read};
 
 #booting
 allow lvm_t device_t:chr_file {open read write};
+allow initrc_t device_t:chr_file {unlink};
 allow initrc_t portage_tmp_t:lnk_file {read};
 allow initrc_t etc_t:lnk_file {rename unlink create};
 allow initrc_t kernel_t:system {module_request};
@@ -221,6 +222,7 @@ allow dmesg_t etc_t:file {getattr open read};
 allow mount_t initrc_tmp_t:dir {mounton};
 allow udev_t systemd_hwdb_t:file {getattr map open read};
 allow getty_t getty_runtime_t:file {watch};
+allow getty_t var_lib_t:dir {search};
 allow ssh_keygen_t proc_t:file {read open getattr};
 allow tmpfiles_t sysctl_kernel_t:dir {search};
 allow tmpfiles_t sysctl_kernel_t:file {read open};
@@ -230,10 +232,6 @@ allow auditd_t audisp_remote_exec_t:file {getattr};
 allow mount_t dosfs_t:filesystem {getattr};
 allow tmpfiles_t syslogd_t:unix_dgram_socket {sendto};
 allow sysadm_t nsfs_t:file {getattr};
-
-#wg connect
-allow initrc_t self:netlink_generic_socket {bind create getattr read write};
-allow initrc_t node_t:udp_socket node_bind;
 
 #services
 allow dhcpc_script_t console_device_t:chr_file {getattr ioctl open read write};

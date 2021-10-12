@@ -1,0 +1,27 @@
+module wireguard_client_custom 1.0;
+#policy for wireguard client
+
+require {
+	type console_device_t;
+	type init_t;
+	type iptables_exec_t;
+	type proc_net_t;
+	type proc_t;
+	type wireguard_t;
+
+	class capability {net_raw sys_tty_config};
+	class chr_file {getattr ioctl open read write};
+	class fd {use};
+	class file {execute execute_no_trans getattr map open read};
+	class filesystem {getattr};
+	class rawip_socket {create getopt};
+
+}
+
+allow wireguard_t console_device_t:chr_file {getattr ioctl open read write};
+allow wireguard_t init_t:fd {use};
+allow wireguard_t iptables_exec_t:file {execute execute_no_trans getattr map open read};
+allow wireguard_t proc_net_t:file {getattr open read};
+allow wireguard_t proc_t:filesystem {getattr};
+allow wireguard_t self:capability {net_raw sys_tty_config};
+allow wireguard_t self:rawip_socket {create getopt};
