@@ -8,6 +8,7 @@ require {
 	type hwclock_t;
 	type initrc_t;
 	type kernel_t;
+	type local_login_t;
 	type nsfs_t;
 	type portage_tmp_t;
 	type proc_t;
@@ -16,9 +17,10 @@ require {
 	type tmpfiles_t;
 	type udev_t;
 	type var_lib_t;
+	type var_log_t;
 	
 	class dir {search};
-	class file {getattr open read};
+	class file {getattr lock open read};
 	class filesystem {getattr};
 	class lnk_file {read};
 	class netlink_audit_socket {getattr};
@@ -36,6 +38,7 @@ allow initrc_t portage_tmp_t:lnk_file {read};
 allow initrc_t udev_t:netlink_kobject_uevent_socket {getattr};
 allow initrc_t udev_t:unix_stream_socket {getattr};
 allow kernel_t portage_tmp_t:lnk_file {read};
+allow local_login_t var_log_t:file {lock open};
 allow setfiles_t proc_t:filesystem {getattr};
 allow setfiles_t sysctl_kernel_t:file {open read};
 allow tmpfiles_t sysctl_kernel_t:dir {search};
