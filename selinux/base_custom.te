@@ -1,10 +1,11 @@
-module base_custom 3.3;
+module base_custom 4.0;
 #basic policy for minimal gentoo systems running initrc
 
 require {
 	type auditctl_t;
 	type auditd_t;
 	type getty_t;
+	type hwclock_t;
 	type initrc_t;
 	type kernel_t;
 	type nsfs_t;
@@ -27,6 +28,7 @@ require {
 
 allow auditctl_t proc_t:filesystem {getattr};
 allow getty_t var_lib_t:dir {search};
+allow hwclock_t proc_t:filesystem {getattr};
 allow initrc_t auditd_t:netlink_audit_socket {getattr};
 allow initrc_t auditd_t:unix_stream_socket {getattr};
 allow initrc_t nsfs_t:file {getattr};
