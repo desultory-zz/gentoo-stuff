@@ -1,4 +1,4 @@
-module sudo_custom 1.0;
+module sudo_custom 2.0;
 #policy for sudo usage
 
 require {
@@ -15,10 +15,11 @@ require {
 	class process {getpgid signal};
 }
 
-allow staff_sudo_t staff_t:dir {search};
-allow staff_sudo_t staff_t:file {open read};
-allow staff_sudo_t proc_t:filesystem {getattr};
-allow staff_sudo_t staff_t:process {getpgid};
-allow staff_sudo_t sysadm_t:process {signal};
 allow local_login_t var_log_t:file {read write};
 allow staff_sudo_t local_login_t:dir {search};
+allow staff_sudo_t local_login_t:file {open read};
+allow staff_sudo_t proc_t:filesystem {getattr};
+allow staff_sudo_t staff_t:dir {search};
+allow staff_sudo_t staff_t:file {open read};
+allow staff_sudo_t staff_t:process {getpgid};
+allow staff_sudo_t sysadm_t:process {signal};

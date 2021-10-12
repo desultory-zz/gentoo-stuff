@@ -5,6 +5,7 @@ require {
 	type init_t;
 	type initrc_t;
 	type locale_t;
+	type proc_t;
 	type run_init_t;
 	type ssh_keygen_t;
 	type sshd_t;
@@ -17,5 +18,6 @@ require {
 allow initrc_t sshd_t:unix_stream_socket {getattr};
 allow ssh_keygen_t locale_t:dir {search};
 allow ssh_keygen_t locale_t:file {getattr map open read};
+allow ssh_keygen_t proc_t:file {read};
 allow sshd_t var_log_t:file {getattr lock open read write};
 allow run_init_t init_t:dir {search};
