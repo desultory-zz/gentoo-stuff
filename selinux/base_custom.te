@@ -84,7 +84,7 @@ require {
 
     type dosfs_t;
 
-    class chr_file {open read write getattr setattr ioctl open};
+    class chr_file {open read write getattr setattr ioctl open unlink};
     class fd {use};
     class lnk_file {read rename unlink create getattr};
     class capability {dac_override kill net_bind_service setgid setuid sys_ptrace sys_resource sys_time sys_tty_config dac_read_search chown};
@@ -253,15 +253,6 @@ allow chkpwd_t proc_t:filesystem {getattr};
 allow sshd_t var_log_t:dir {add_name write};
 allow sshd_t var_log_t:file {create getattr lock open read write};
 allow local_login_t proc_t:filesystem {getattr};
-
-#sudo
-allow staff_sudo_t staff_t:dir {search};
-allow staff_sudo_t staff_t:file {open read};
-allow staff_sudo_t proc_t:filesystem {getattr};
-allow staff_sudo_t staff_t:process {getpgid};
-allow staff_sudo_t sysadm_t:process {signal};
-allow local_login_t var_log_t:file {read write};
-allow staff_sudo_t local_login_t:dir {search};
 
 #semanage
 allow semanage_t proc_t:filesystem {getattr};

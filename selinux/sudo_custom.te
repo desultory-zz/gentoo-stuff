@@ -1,0 +1,24 @@
+module sudo_custom 1.0;
+#policy for sudo usage
+
+require {
+	type local_login_t;
+	type proc_t;
+	type staff_t;
+	type staff_sudo_t;
+	type sysadm_t;
+	type var_log_t;
+
+	class dir {search};
+	class file {open read write};
+	class filesystem {getattr};
+	class process {getpgid signal};
+}
+
+allow staff_sudo_t staff_t:dir {search};
+allow staff_sudo_t staff_t:file {open read};
+allow staff_sudo_t proc_t:filesystem {getattr};
+allow staff_sudo_t staff_t:process {getpgid};
+allow staff_sudo_t sysadm_t:process {signal};
+allow local_login_t var_log_t:file {read write};
+allow staff_sudo_t local_login_t:dir {search};
