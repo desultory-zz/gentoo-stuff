@@ -2,7 +2,7 @@ module diag_custom 1.0;
 #policy for basic diagnostics
 
 require {
-	type kernet_t;
+	type kernel_t;
 	type ping_t;
 	type sysadm_t;
 
