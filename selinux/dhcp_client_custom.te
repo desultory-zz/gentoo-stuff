@@ -21,6 +21,7 @@ require {
 	class packet_socket {getattr};
 	class rawip_socket {getattr};
 	class unix_dgram_socket {getattr ioctl read write};
+	class unix_stream_socket {getattr};
 }
 
 
