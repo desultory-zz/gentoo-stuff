@@ -28,7 +28,7 @@ require {
 	type var_lib_t;
 	type var_log_t;
 	
-	class chr_file {open setattr write};
+	class chr_file {getattr open setattr write};
 	class dir {mounton search watch};
 	class file {getattr lock open read};
 	class filesystem {getattr};
@@ -52,7 +52,7 @@ allow initrc_t udev_t:netlink_kobject_uevent_socket {getattr};
 allow initrc_t udev_t:unix_stream_socket {getattr};
 allow kernel_t portage_tmp_t:lnk_file {read};
 allow kmod_t initrc_tmp_t:file {open read};
-allow kmod_t device_t:chr_file {open write};
+allow kmod_t device_t:chr_file {getattr open write};
 allow local_login_t var_log_t:file {lock open};
 allow mount_t initrc_tmp_t: dir {mounton};
 allow setfiles_t proc_t:filesystem {getattr};
