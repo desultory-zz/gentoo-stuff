@@ -4,6 +4,9 @@ module base_custom 4.0;
 require {
 	type auditctl_t;
 	type auditd_t;
+	type device_t;
+	type dmesg_t;
+	type etc_t;
 	type getty_t;
 	type hwclock_t;
 	type initrc_t;
@@ -16,23 +19,28 @@ require {
 	type sysctl_kernel_t;
 	type tmpfiles_t;
 	type udev_t;
+	type udev_rules_t;
+	type udev_runtime_t;
 	type var_lib_t;
 	type var_log_t;
 	
-	class dir {search};
+	class chr_file {setattr};
+	class dir {search watch};
 	class file {getattr lock open read};
 	class filesystem {getattr};
-	class lnk_file {read};
+	class lnk_file {create read rename};
 	class netlink_audit_socket {getattr};
 	class netlink_kobject_uevent_socket {getattr};
 	class unix_stream_socket {getattr};
 }
 
 allow auditctl_t proc_t:filesystem {getattr};
+allow dmesg_t etc_t: file {getattr open read};
 allow getty_t var_lib_t:dir {search};
 allow hwclock_t proc_t:filesystem {getattr};
 allow initrc_t auditd_t:netlink_audit_socket {getattr};
 allow initrc_t auditd_t:unix_stream_socket {getattr};
+allow initrc_t etc_t:lnk_file {create rename};
 allow initrc_t nsfs_t:file {getattr};
 allow initrc_t portage_tmp_t:lnk_file {read};
 allow initrc_t udev_t:netlink_kobject_uevent_socket {getattr};
@@ -41,6 +49,9 @@ allow kernel_t portage_tmp_t:lnk_file {read};
 allow local_login_t var_log_t:file {lock open};
 allow setfiles_t proc_t:filesystem {getattr};
 allow setfiles_t sysctl_kernel_t:file {open read};
+allow tmpfiles_t device_t:chr_file {setattr};
 allow tmpfiles_t sysctl_kernel_t:dir {search};
 allow tmpfiles_t sysctl_kernel_t:file {open read};
 allow udev_t portage_tmp_t:lnk_file {read};
+allow udev_t udev_rules_t:dir {watch};
+allow udev_t udev_runtime_t:dir {watch};
