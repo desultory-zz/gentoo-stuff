@@ -1,0 +1,16 @@
+module vmware_custom 1.0;
+#policy for vmware tools
+
+require {
+	type device_t;
+	type initrc_t;
+	type kernel_t;
+
+	class chr_file {unlink};
+	class system {module_request};
+	class vsock_socket {bind connect create getattr getopt read write};
+}
+
+allow initrc_t device_t:chr_file {unlink};
+allow initrc_t kernel_t:system {module_request};
+allow initrc_t self:vsock_socket {bind connect create getattr getopt read write};
