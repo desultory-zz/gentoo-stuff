@@ -29,7 +29,7 @@ require {
 	type var_log_t;
 	
 	class chr_file {setattr};
-	class dir {search watch};
+	class dir {mounton search watch};
 	class file {getattr lock open read};
 	class filesystem {getattr};
 	class lnk_file {create read rename unlink};
