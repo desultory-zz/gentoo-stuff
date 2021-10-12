@@ -1,15 +1,21 @@
-module ssh_custom 1.0;
+module ssh_custom 2.0;
 #policy for ssh server
 
 require {
+	type init_t;
+	type initrc_t;
+	type locale_t;
+	type run_init_t;
+	type ssh_keygen_t;
 	type sshd_t;
 	type var_log_t;
-	type run_init_t;
-	type init_t;
 	
-	class file {getattr lock open read write};
+	class file {getattr lock map open read write};
 	class dir {search};
+	class unix_stream_socket {getattr};
 }
-
-allow sshd_t var_log_t:file { getattr lock open read write };
-allow run_init_t init_t:dir search;
+allow initrc_t sshd_t:unix_stream_socket {getattr};
+allow ssh_keygen_t locale_t:dir {search};
+allow ssh_keygen_t locale_t:file {getattr map open read};
+allow sshd_t var_log_t:file {getattr lock open read write};
+allow run_init_t init_t:dir {search};
