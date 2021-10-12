@@ -7,6 +7,7 @@ require {
 	type initrc_t;
 	type nsfs_t;
 	type portage_tmp_t;
+	type proc_t;
 	type resolvconf_t;
 	type sysctl_kernel_t;
 	type tmpfs_t;
