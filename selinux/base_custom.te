@@ -10,6 +10,7 @@ require {
 	type nsfs_t;
 	type portage_tmp_t;
 	type proc_t;
+	type setfiles_t;
 	type sysctl_kernel_t;
 	type tmpfiles_t;
 	type udev_t;
@@ -33,6 +34,8 @@ allow initrc_t portage_tmp_t:lnk_file {read};
 allow initrc_t udev_t:netlink_kobject_uevent_socket {getattr};
 allow initrc_t udev_t:unix_stream_socket {getattr};
 allow kernel_t portage_tmp_t:lnk_file {read};
+allow setfiles_t proc_t:filesystem {getattr};
+allow setfiles_t sysctl_kernel_t:file {open read};
 allow tmpfiles_t sysctl_kernel_t:dir {search};
 allow tmpfiles_t sysctl_kernel_t:file {open read};
 allow udev_t portage_tmp_t:lnk_file {read};
