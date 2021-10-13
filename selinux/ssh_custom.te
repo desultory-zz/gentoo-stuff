@@ -1,4 +1,4 @@
-module ssh_custom 2.0;
+module ssh_custom 2.1;
 #policy for ssh server
 
 require {
@@ -11,13 +11,15 @@ require {
 	type sshd_t;
 	type var_log_t;
 	
-	class file {getattr lock map open read write};
 	class dir {search};
+	class file {getattr lock map open read write};
+	class process {getcap setcap};
 	class unix_stream_socket {getattr};
 }
 allow initrc_t sshd_t:unix_stream_socket {getattr};
 allow ssh_keygen_t locale_t:dir {search};
 allow ssh_keygen_t locale_t:file {getattr map open read};
 allow ssh_keygen_t proc_t:file {getattr open read};
+allow sshd_t self:process {getcap setcap};
 allow sshd_t var_log_t:file {getattr lock open read write};
 allow run_init_t init_t:dir {search};
