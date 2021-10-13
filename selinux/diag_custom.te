@@ -22,3 +22,5 @@ allow sysadm_t kernel_t:system {module_request};
 allow sysadm_t self:netlink_tcpdiag_socket {bind create nlmsg_read read setopt write};
 #let escalated users watch logs
 allow sysadm_t var_log_t:file {watch};
+#let escalated users interact with services
+allow sysadm_t nsfs_t:file {getattr};
