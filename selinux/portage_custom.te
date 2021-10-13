@@ -10,6 +10,7 @@ require {
 	type fixed_disk_device_t;
 	type gcc_config_t;
 	type kernel_t;
+	type ldconfig_t;
 	type ldconfig_cache_t;
 	type lib_t;
 	type load_policy_t;
@@ -36,8 +37,8 @@ require {
 
 	class blk_file {getattr};
 	class capability {dac_read_search};
-	class chr_file {append getattr ioctl map read};
-	class dir {add_name getattr read remove_name search watch write};
+	class chr_file {append getattr ioctl map read write};
+	class dir {add_name getattr read remove_name search setattr watch write};
 	class fifo_file {write};
 	class file {append create getattr ioctl lock map open read unlink write};
 	class filesystem {associate getattr};
@@ -57,14 +58,16 @@ allow chkpwd_t sysctl_kernel_t:file {open read};
 allow gcc_config_t bin_t:lnk_file {create rename unlink};
 allow gcc_config_t lib_t:lnk_file {create rename unlink};
 allow gcc_config_t fixed_disk_device_t:blk_file {getattr};
-allow gcc_config_t portage_devpts_t:chr_file {append getattr ioctl read};
+allow gcc_config_t portage_devpts_t:chr_file {append getattr ioctl read write};
 allow gcc_config_t portage_tmp_t:dir {add_name remove_name write};
 allow gcc_config_t portage_tmp_t:file {append create getattr ioctl lock open read unlink write};
 allow gcc_config_t portage_tmp_t:lnk_file {read};
-allow gcc_config_t root_t:dir {write};
+allow gcc_config_t root_t:dir {add_name remove_name setattr write};
+allow gcc_config_t root_t:lnk_file {create rename unlink};
 allow gcc_config_t self:capability {dac_read_search};
 allow gcc_config_t self:process {getsched};
 allow gcc_config_t sysfs_t:lnk_file {read};
+allow ldconfig_t portage_devpts_t:chr_file {append read};
 allow load_policy_t portage_t:fifo_file {write};
 allow mount_t dosfs_t:filesystem {getattr};
 allow portage_t portage_fetch_t:unix_stream_socket {connectto};
