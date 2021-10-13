@@ -1,0 +1,17 @@
+module portage_custom 1.0;
+#selinux policy for portage
+require {
+	type gcc_config_t;
+	type portage_devpts_t;
+	type root_t;
+
+	class capability {dac_read_search};
+	class chr_file {append read};
+	class dir {write};
+	class process {getsched};
+}
+
+allow gcc_config_t portage_devpts_t:chr_file {append read};
+allow gcc_config_t root_t:dir {write};
+allow gcc_config_t self:capability {dac_read_search};
+allow gcc_config_t self:process {getsched};
