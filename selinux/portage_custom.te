@@ -16,6 +16,7 @@ require {
 	type modules_dep_t;
 	type modules_object_t;
 	type mount_t;
+	type node_t;
 	type portage_t;
 	type portage_devpts_t;
 	type portage_fetch_t;
@@ -30,10 +31,12 @@ require {
 	type tmpfs_t;
 	type udev_t;
 	type unlabeled_t;
+	type unreserved_port_t;
+	type zero_device_t;
 
 	class blk_file {getattr};
 	class capability {dac_read_search};
-	class chr_file {append getattr ioctl read};
+	class chr_file {append getattr ioctl map read};
 	class dir {add_name getattr read remove_name search watch write};
 	class fifo_file {write};
 	class file {append create getattr ioctl lock map open read unlink write};
@@ -41,6 +44,7 @@ require {
 	class lnk_file {create read rename unlink};
 	class process {getsched};
 	class system {module_request};
+	class tcp_socket {name_connect node_bind};
 	class unix_stream_socket {connectto};
 }
 
@@ -71,7 +75,10 @@ allow portage_t udev_t:unix_stream_socket {connectto};
 allow portage_fetch_t dosfs_t:dir {getattr search};
 allow portage_sandbox_t modules_dep_t:file {map};
 allow portage_sandbox_t modules_object_t:file {map};
+allow portage_sandbox_t node_t:tcp_socket {node_bind};
 allow portage_sandbox_t proc_t:filesystem {getattr};
+allow portage_sandbox_t unreserved_port_t:tcp_socket {name_connect};
+allow portage_sandbox_t zero_device_t:chr_file {map};
 allow portage_fetch_t portage_tmp_t:dir {watch};
 allow portage_fetch_t src_t:dir {getattr search};
 allow portage_sandbox_t cgroup_t:filesystem {getattr};
