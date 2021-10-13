@@ -1,0 +1,9 @@
+module dns_custom 1.0;
+#selinux policy for bind and dnscrypt servers
+require {
+	type initrc_t;
+	type node_t;
+
+	class udp_socket {node_bind};
+}
+allow initrc_t node_t:udp_socket {node_bind};

@@ -1,4 +1,4 @@
-module dhcp_client_custom 1.2;
+module dhcp_client_custom 1.3;
 #policy for dhcp client
 
 require {
@@ -9,6 +9,7 @@ require {
 	type portage_tmp_t;
 	type proc_t;
 	type resolvconf_t;
+	type resolvconf_conf_t;
 	type sysctl_kernel_t;
 	type tmpfs_t;
 	
@@ -38,6 +39,7 @@ allow initrc_t dhcpc_t:netlink_route_socket {getattr};
 allow initrc_t dhcpc_t:packet_socket {getattr};
 allow initrc_t dhcpc_t:rawip_socket {getattr};
 allow initrc_t dhcpc_t:unix_stream_socket {getattr};
-allow resolvconf_t dhcpc_t:unix_dgram_socket {ioctl read write};
+allow initrc_t resolvconf_conf_t:file {open read};
+allow resolvconf_t dhcpc_t:unix_dgram_socket {getattr ioctl read write};
 allow resolvconf_t tmpfs_t:filesystem {getattr};
 allow resolvconf_t proc_t:file {getattr open read};

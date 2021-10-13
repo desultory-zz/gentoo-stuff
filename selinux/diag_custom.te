@@ -1,11 +1,13 @@
-module diag_custom 1.0;
+module diag_custom 1.1;
 #policy for basic diagnostics
 
 require {
 	type kernel_t;
 	type ping_t;
 	type sysadm_t;
+	type var_log_t;
 
+	class file {watch};
 	class netlink_tcpdiag_socket {bind create nlmsg_read read setopt write};	
 	class system {module_request};
 }
@@ -13,3 +15,4 @@ require {
 allow ping_t kernel_t:system {module_request};
 allow sysadm_t kernel_t:system {module_request};
 allow sysadm_t self:netlink_tcpdiag_socket {bind create nlmsg_read read setopt write};
+allow sysadm_t var_log_t:file {watch};
