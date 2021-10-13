@@ -3,12 +3,13 @@ module diag_custom 1.1;
 
 require {
 	type kernel_t;
+	type nsfs_t;
 	type ping_t;
 	type staff_t;
 	type sysadm_t;
 	type var_log_t;
 
-	class file {watch};
+	class file {getattr watch};
 	class netlink_tcpdiag_socket {bind create nlmsg_read read setopt write};	
 	class system {module_request};
 }
