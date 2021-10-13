@@ -1,23 +1,43 @@
-module portage_custom 1.1;
+module portage_custom 1.2;
 #selinux policy for portage
 require {
+	type bin_t;
+	type bootloader_t;
 	type gcc_config_t;
+	type lib_t;
 	type portage_t;
 	type portage_devpts_t;
 	type portage_fetch_t;
 	type portage_tmp_t;
 	type root_t;
+	type sysfs_t;
+	type systemd_hwdb_t;
+	type tmpfs_t;
+	type udev_t;
 
 	class capability {dac_read_search};
-	class chr_file {append read};
-	class dir {watch write};
+	class chr_file {append getattr ioctl read};
+	class dir {watch read write};
+	class file {getattr read};
+	class lnk_file {create read};
 	class process {getsched};
 	class unix_stream_socket {connectto};
 }
 
-allow gcc_config_t portage_devpts_t:chr_file {append read};
+
+
+allow bootloader_t portage_tmp_t:lnk_file {read};
+allow bootloader_t self:process {getsched};
+allow bootloader_t tmpfs_t:dir {read};
+allow gcc_config_t bin_t:lnk_file {create};
+allow gcc_config_t lib_t:lnk_file {create};
+allow gcc_config_t portage_devpts_t:chr_file {append getattr ioctl read};
+allow gcc_config_t portage_tmp_t:dir {write};
+allow gcc_config_t portage_tmp_t:lnk_file {read};
 allow gcc_config_t root_t:dir {write};
 allow gcc_config_t self:capability {dac_read_search};
 allow gcc_config_t self:process {getsched};
+allow gcc_config_t sysfs_t:lnk_file {read};
 allow portage_fetch_t portage_tmp_t:dir watch;
 allow portage_t portage_fetch_t:unix_stream_socket connectto;
+allow udev_t systemd_hwdb_t:file {getattr read};
