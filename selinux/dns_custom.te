@@ -3,6 +3,7 @@ module dns_custom 1.2;
 require {
 	type init_t;
 	type initrc_t;
+	type initrc_state_t;
 	type node_t;
 	type run_init_t;
 	type sysadm_t;
@@ -11,13 +12,17 @@ require {
 
 	class capability {dac_read_search};
 	class dir {search};
-	class file {read};
+	class file {getattr open read};
+	class filesystem {getattr};
 	class udp_socket {node_bind};
 	class tcp_socket {node_bind};
 }
 
 allow initrc_t node_t:udp_socket {node_bind};
-allow run_init_t init_t:file {read};
+allow run_init_t init_t:file {getattr open read};
+allow run_init_t initrc_state_t:file {getattr open read};
+allow run_init_t proc_t:filesystem {getattr};
 allow run_init_t sysctl_kernel_t:dir {search};
+allow run_init_t sysctl_kernel_t:file {open read};
 allow sysadm_t node_t:tcp_socket {node_bind};
 allow tmpfiles_t self:capability {dac_read_search};
