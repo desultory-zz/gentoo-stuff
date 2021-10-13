@@ -7,7 +7,7 @@ require {
 	type node_t;
 	type run_init_t;
 	type sysadm_t;
-	typs sysctl_kernel_t;
+	type sysctl_kernel_t;
 	type tmpfiles_t;
 
 	class capability {dac_read_search};
