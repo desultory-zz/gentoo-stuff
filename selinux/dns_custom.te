@@ -5,6 +5,7 @@ require {
 	type initrc_t;
 	type initrc_state_t;
 	type node_t;
+	type proc_t;
 	type run_init_t;
 	type sysadm_t;
 	type sysctl_kernel_t;
