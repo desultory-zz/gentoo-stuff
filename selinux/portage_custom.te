@@ -1,10 +1,12 @@
-module portage_custom 1.2;
+module portage_custom 1.3;
 #selinux policy for portage
 require {
 	type bin_t;
 	type bootloader_t;
+	type dosfs_t;
 	type gcc_config_t;
 	type lib_t;
+	type mount_t;
 	type portage_t;
 	type portage_devpts_t;
 	type portage_fetch_t;
@@ -19,11 +21,11 @@ require {
 	class chr_file {append getattr ioctl read};
 	class dir {watch read write};
 	class file {getattr read};
+	class filesystem {getattr};
 	class lnk_file {create read};
 	class process {getsched};
 	class unix_stream_socket {connectto};
 }
-
 
 
 allow bootloader_t portage_tmp_t:lnk_file {read};
@@ -38,6 +40,7 @@ allow gcc_config_t root_t:dir {write};
 allow gcc_config_t self:capability {dac_read_search};
 allow gcc_config_t self:process {getsched};
 allow gcc_config_t sysfs_t:lnk_file {read};
-allow portage_fetch_t portage_tmp_t:dir watch;
+allow mount_t dosfs_t:filesystem {getattr};
+allow portage_fetch_t portage_tmp_t:dir {watch};
 allow portage_t portage_fetch_t:unix_stream_socket connectto;
 allow udev_t systemd_hwdb_t:file {getattr read};
