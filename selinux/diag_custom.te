@@ -11,7 +11,7 @@ require {
 	type var_log_t;
 
 	class file {getattr watch};
-	class lnk_file{read}
+	class lnk_file {read};
 	class netlink_tcpdiag_socket {bind create nlmsg_read read setopt write};	
 	class system {module_request};
 }
