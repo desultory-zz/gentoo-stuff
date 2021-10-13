@@ -5,6 +5,7 @@ require {
 	type bootloader_t;
 	type cgroup_t;
 	type chkpwd_t;
+	type device_t;
 	type dosfs_t;
 	type fixed_disk_device_t;
 	type gcc_config_t;
