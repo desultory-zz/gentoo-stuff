@@ -1,8 +1,9 @@
-module portage_custom 1.8;
+module portage_custom 1.9;
 #selinux policy for portage
 require {
 	type bin_t;
 	type bootloader_t;
+	type cgroup_t;
 	type chkpwd_t;
 	type dosfs_t;
 	type fixed_disk_device_t;
@@ -11,6 +12,8 @@ require {
 	type ldconfig_cache_t;
 	type lib_t;
 	type load_policy_t;
+	type modules_dep_t;
+	type modules_object_t;
 	type mount_t;
 	type portage_t;
 	type portage_devpts_t;
@@ -33,7 +36,7 @@ require {
 	class dir {add_name getattr read remove_name search watch write};
 	class fifo_file {write};
 	class file {append create getattr ioctl lock map open read unlink write};
-	class filesystem {getattr};
+	class filesystem {associate getattr};
 	class lnk_file {create read rename unlink};
 	class process {getsched};
 	class system {module_request};
@@ -60,9 +63,18 @@ allow gcc_config_t sysfs_t:lnk_file {read};
 allow load_policy_t portage_t:fifo_file {write};
 allow mount_t dosfs_t:filesystem {getattr};
 allow portage_t portage_fetch_t:unix_stream_socket {connectto};
+allow portage_t proc_t:filesystem {associate};
+allow portage_t self:dir {add_name write};
+allow portage_t self:file {create};
+allow portage_t udev_t:unix_stream_socket {connectto};
 allow portage_fetch_t dosfs_t:dir {getattr search};
+allow portage_sandbox_t modules_dep_t:file {map};
+allow portage_sandbox_t modules_object_t:file {map};
+allow portage_sandbox_t proc_t:filesystem {getattr};
 allow portage_fetch_t portage_tmp_t:dir {watch};
 allow portage_fetch_t src_t:dir {getattr search};
+allow portage_sandbox_t cgroup_t:filesystem {getattr};
+allow portage_sandbox_t device_t:filesystem {getattr};
 allow portage_sandbox_t kernel_t:system {module_request};
 allow portage_sandbox_t ldconfig_cache_t:file {map};
 allow portage_sandbox_t unlabeled_t:file {getattr};
