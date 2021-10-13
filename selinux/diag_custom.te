@@ -1,15 +1,17 @@
-module diag_custom 1.1;
+module diag_custom 1.2;
 #policy for basic diagnostics
 
 require {
 	type kernel_t;
 	type nsfs_t;
 	type ping_t;
+	type portage_tmp_t;
 	type staff_t;
 	type sysadm_t;
 	type var_log_t;
 
 	class file {getattr watch};
+	class lnk_file{read}
 	class netlink_tcpdiag_socket {bind create nlmsg_read read setopt write};	
 	class system {module_request};
 }
@@ -25,3 +27,5 @@ allow sysadm_t self:netlink_tcpdiag_socket {bind create nlmsg_read read setopt w
 allow sysadm_t var_log_t:file {watch};
 #let escalated users interact with services
 allow sysadm_t nsfs_t:file {getattr};
+#let staff read manual pages
+allow staff_t portage_tmp_t:lnk_file {read};
