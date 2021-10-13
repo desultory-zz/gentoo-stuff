@@ -68,6 +68,7 @@ allow kmod_t device_t:chr_file {getattr open read write};
 allow local_login_t var_log_t:file {lock open};
 allow mount_t initrc_tmp_t: dir {mounton};
 allow semanage_t proc_t: file {getattr};
+allow semanage_t proc_t:filesystem {getattr};
 allow setfiles_t proc_t:filesystem {getattr};
 allow setfiles_t sysctl_kernel_t:file {open read};
 allow tmpfiles_t device_t:chr_file {setattr};
