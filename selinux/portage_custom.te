@@ -69,6 +69,7 @@ allow gcc_config_t root_t:lnk_file {create rename unlink};
 allow gcc_config_t self:capability {dac_read_search};
 allow gcc_config_t self:process {getsched};
 allow gcc_config_t sysfs_t:lnk_file {read};
+allow gcc_config_t var_t:file {getattr ioctl open read};
 allow ldconfig_t portage_devpts_t:chr_file {append read};
 allow load_policy_t portage_t:fifo_file {write};
 allow mount_t dosfs_t:filesystem {getattr};
