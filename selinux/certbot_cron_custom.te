@@ -1,21 +1,42 @@
-module certbot_cron_custom 2.0;
+module certbot_cron_custom 2.5;
 #module to allow for certbot to run in a nfs share from the cron folders
 
 require {
+	type cgroup_t;
 	type http_port_t;
+	type httpd_t;
+	type httpd_runtime_d;
+	type init_t;
+	type initrc_state_t;
 	type nfs_t;
 	type user_home_t; #for the local bin
+	type proc_t;
+	type run_init_t;
+	type staff_t;
+	type sysadm_sudo_t;
+	type sysctl_kernel_t;
 	type system_cronjob_t;
 	type system_mail_t;
+	type usr_tmp_t;
 	type var_spool_t;
 
-	class dir {add_name create remove_name rmdir write};
-	class file {create execute execute_no_trans ioctl map open read rename setattr unlink};
+	class dir {add_name create relabelfrom relabelto remove_name rmdir write};
 	class fifo_file {open unlink write};
-	class process {setcap};
+	class file {create execute execute_no_trans getattr ioctl map open read relabelfrom rename setattr unlink};
+	class filesystem {getattr};
+	class process {setcap signal signull};
 	class tcp_socket {name_connect};
 }
 
+allow run_init_t init_t:file {getattr open};
+allow run_init_t initrc_state_t:file {getattr open read};
+allow run_init_t proc_t:filesystem {getattr};
+allow run_init_t sysctl_kernel_t:file {open read};
+allow staff_t cgroup_t:dir {write};
+allow staff_t httpd_runtime_t:dir {relabelfrom relabelto};
+allow staff_t httpd_t:process {signal signull};
+allow staff_t user_tmp_t:file {relabelfrom};
+allow sysadm_sudo_t proc_t:filesystem {getattr};
 allow system_cronjob_t http_port_t:tcp_socket {name_connect};
 allow system_cronjob_t nfs_t:dir {add_name create remove_name rmdir write};
 allow system_cronjob_t nfs_t:file {create execute execute_no_trans rename setattr unlink};
