@@ -33,6 +33,7 @@ require {
 	type system_dbusd_t;
 	type unlabeled_t;
 	type unreserved_port_t;
+	type var_lib_t;
 	type var_lock_t;
 	type smbd_t;
 	type winbind_t;
