@@ -39,8 +39,8 @@ require {
 
 	class capability {dac_read_search sys_tty_config};
 	class chr_file {getattr open read setattr write};
-	class dir {add_name create mounton search watch write};
-	class file {getattr lock map open read write};
+	class dir {add_name create mounton search setattr watch write};
+	class file {create getattr ioctl link lock map open read setattr write};
 	class filesystem {getattr};
 	class lnk_file {create read rename unlink};
 	class netlink_audit_socket {getattr};
@@ -82,12 +82,18 @@ allow udev_t udev_runtime_t:dir {watch};
 
 
 #backround
-allow logrotate_t system_cronjob_tmp_t:file {read write};
-allow logrotate_t var_log_t:dir {create};
+allow logrotate_t system_cronjob_tmp_t:file {read ioctl write};
+allow logrotate_t var_log_t:dir {create setattr};
 allow mandb_t system_cronjob_tmp_t:file {read write};
-allow system_cronjob_t faillog_t:dir {write};
+allow system_cronjob_t faillog_t:dir {add_name write};
+allow system_cronjob_t faillog_t:file {create lock open read setattr write};
 allow system_cronjob_t security_t:file {map};
 allow system_cronjob_t self:process {getcap};
 allow system_cronjob_t portage_tmp_t:lnk_file {read};
 allow system_mail_t self:capability {dac_read_search};
+allow system_mail_t var_spool_t:file {create link open read write};
 allow system_mail_t var_spool_t:dir {add_name write};
+
+
+
+
