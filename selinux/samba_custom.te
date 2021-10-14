@@ -1,4 +1,4 @@
-module samba_custom 1.5;
+module samba_custom 1.6;
 #policy for smb AD DS server
 
 require {
@@ -14,6 +14,7 @@ require {
 	type kernel_t;
 	type ldap_port_t;
 	type mount_t;
+	type nfsd_t;
 	type nfsd_fs_t;
 	type nmbd_port_t;
 	type node_t;
@@ -30,6 +31,7 @@ require {
 	type semanage_t;
 	type sysadm_t;
 	type system_dbusd_t;
+	type unlabeled_t;
 	type unreserved_port_t;
 	type var_lock_t;
 	type smbd_t;
@@ -43,7 +45,7 @@ require {
 	class sock_file {create unlink write};
 	class system {module_request};
 	class tcp_socket {name_bind node_bind};
-	class udp_socket {name_bind};
+	class udp_socket {name_bind node_bind};
 	class unix_dgram_socket {sendto};
 	class unix_stream_socket {connectto sendto};
 }
@@ -60,6 +62,7 @@ allow initrc_t ldap_port_t:udp_socket {name_bind};
 allow initrc_t nfsd_fs_t:file {open read};
 allow initrc_t nmbd_port_t:udp_socket {name_bind};
 allow initrc_t node_t:tcp_socket {node_bind};
+allow initrc_t node_t:udp_socket {node_bind};
 allow initrc_t public_content_rw_t:dir {add_name create remove_name rename rmdir watch write};
 allow initrc_t public_content_rw_t:file {append create execute ioctl lock setattr map open read rename unlink write};
 allow initrc_t public_content_rw_t:lnk_file {read};
@@ -85,6 +88,9 @@ allow krb5kdc_t samba_log_t:file {append create getattr open};
 allow krb5kdc_t samba_var_t:dir {getattr search};
 allow krb5kdc_t samba_var_t:file {getattr lock map open read write};
 allow krb5kdc_t var_lock_t:file {read write};
+allow krb5kdc_t var_lib_t:dir {search};
+allow nfsd_t nfsd_fs_t:dir {read watch};
+allow nfsd_t unlabeled_t:dir {getattr search};
 allow mount_t dosfs_t:filesystem {getattr};
 allow rpcd_t rpc_pipefs_t:dir {watch};
 allow rpcd_t self:capability {dac_read_search};
@@ -92,6 +98,7 @@ allow semanage_t public_content_rw_t:dir {search};
 allow smbd_t kernel_t:system {module_request};
 allow smbd_t public_content_rw_t:dir {watch};
 allow smbd_t samba_var_t:file {map};
+allow smbd_t unlabeled_t:dir {getattr search};
 allow smbd_t var_lock_t:file {map};
 allow smbd_t winbind_t:unix_dgram_socket {sendto};
 allow sysadm_t nsfs_t:file {getattr};
