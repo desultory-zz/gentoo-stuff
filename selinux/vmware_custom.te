@@ -1,13 +1,19 @@
-module vmware_custom 1.5;
+module vmware_custom 1.7;
 #policy for vmware tools
 
 require {
 	type device_t;
+	type etc_runtime_t;
+	type init_t;
 	type initrc_t;
 	type kernel_t;
 	type shutdown_t;
+	type sysctl_kernel_t;
+	type run_init_t;
 
 	class chr_file {unlink};
+	class dir {search};
+	class file {read};
 	class system {module_request};
 	class vsock_socket {bind connect create getattr getopt read write};
 }
@@ -15,4 +21,7 @@ require {
 allow initrc_t device_t:chr_file {unlink};
 allow initrc_t kernel_t:system {module_request};
 allow initrc_t self:vsock_socket {bind connect create getattr getopt read write};
-allow shutdown_t initrc_t:vsock_socket { read write };
+allow run_init_t etc_runtime_t:file {read};
+allow run_init_t init_t:file {read};
+allow run_init_t sysctl_kernel_t:dir {search};
+allow shutdown_t initrc_t:vsock_socket {read write};
