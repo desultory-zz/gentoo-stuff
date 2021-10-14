@@ -13,7 +13,6 @@ require {
 	type kerberos_admin_port_t;
 	type krb5kdc_t;
 	type kernel_t;
-	type hwdb_t;
 	type ldap_port_t;
 	type lvm_t;
 	type mount_t;
@@ -34,6 +33,7 @@ require {
 	type semanage_t;
 	type sysadm_t;
 	type system_dbusd_t;
+	type systemd_hwdb_t;
 	type udev_t;
 	type unlabeled_t;
 	type unreserved_port_t;
@@ -112,7 +112,7 @@ allow smbd_t var_lock_t:file {map};
 allow smbd_t winbind_t:unix_dgram_socket {sendto};
 allow sysadm_t nsfs_t:file {getattr};
 allow system_dbusd_t security_t:file {map};
-allow udev_t hwdb_t:file {open map};
+allow udev_t systemd_hwdb_t:file {open map};
 allow winbind_t initrc_t:unix_stream_socket {connectto};
 allow winbind_t samba_var_t:file {map};
 allow winbind_t self:unix_dgram_socket {sendto};
