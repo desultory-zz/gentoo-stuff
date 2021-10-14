@@ -84,6 +84,7 @@ allow udev_t udev_runtime_t:dir {watch};
 
 #backround
 allow logrotate_t system_cronjob_tmp_t:file {read ioctl write};
+allow logrotate_t var_lib_t:file {write};
 allow logrotate_t var_log_t:dir {create setattr};
 allow mandb_t system_cronjob_tmp_t:file {read write};
 allow system_cronjob_t faillog_t:dir {add_name write};
