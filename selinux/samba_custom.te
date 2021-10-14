@@ -1,8 +1,9 @@
-module samba_custom 1.6;
+module samba_custom 1.7;
 #policy for smb AD DS server
 
 require {
 	type avahi_t;
+	type device_t;
 	type dns_port_t;
 	type dosfs_t;
 	type etc_t;	
@@ -12,7 +13,9 @@ require {
 	type kerberos_admin_port_t;
 	type krb5kdc_t;
 	type kernel_t;
+	type hwdb_t;
 	type ldap_port_t;
+	type lvm_t;
 	type mount_t;
 	type nfsd_t;
 	type nfsd_fs_t;
@@ -31,6 +34,7 @@ require {
 	type semanage_t;
 	type sysadm_t;
 	type system_dbusd_t;
+	type udev_t;
 	type unlabeled_t;
 	type unreserved_port_t;
 	type var_lib_t;
@@ -39,6 +43,7 @@ require {
 	type winbind_t;
 
 	class capability {dac_read_search};
+	class chr_file {read write open};
 	class dir {add_name create getattr read rename remove_name rmdir search watch write};
 	class file {append create execute getattr ioctl lock map open read rename setattr unlink write};
 	class filesystem {getattr};
@@ -74,6 +79,8 @@ allow initrc_t samba_log_t:file {create rename unlink};
 allow initrc_t samba_var_t:file {create ioctl lock map open read write};
 allow initrc_t samba_var_t:dir {add_name remove_name write};
 allow initrc_t samba_var_t:sock_file {create unlink write};
+allow initrc_t unlabeled_t:dir {watch};
+allow initrc_t unlabeled_t:file {getattr};
 allow initrc_t unreserved_port_t:tcp_socket {name_bind};
 allow initrc_t unreserved_port_t:udp_socket {name_bind};
 allow initrc_t var_lock_t:file {map};
@@ -90,6 +97,7 @@ allow krb5kdc_t samba_var_t:dir {getattr search};
 allow krb5kdc_t samba_var_t:file {getattr lock map open read write};
 allow krb5kdc_t var_lock_t:file {read write};
 allow krb5kdc_t var_lib_t:dir {search};
+allow lvm_t device_t:chr_file {open read write};
 allow nfsd_t nfsd_fs_t:dir {read watch};
 allow nfsd_t unlabeled_t:dir {getattr search};
 allow mount_t dosfs_t:filesystem {getattr};
@@ -104,6 +112,7 @@ allow smbd_t var_lock_t:file {map};
 allow smbd_t winbind_t:unix_dgram_socket {sendto};
 allow sysadm_t nsfs_t:file {getattr};
 allow system_dbusd_t security_t:file {map};
+allow udev_t hwdb_t:file {open map};
 allow winbind_t initrc_t:unix_stream_socket {connectto};
 allow winbind_t samba_var_t:file {map};
 allow winbind_t self:unix_dgram_socket {sendto};
