@@ -5,6 +5,7 @@ require {
         type cslistener_port_t;
         type console_device_t;
         type device_t;
+	type etc_runtime_t;
         type httpd_t;
 	type httpd_log_t;
         type initrc_t;
