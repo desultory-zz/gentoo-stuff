@@ -1,33 +1,32 @@
 #selinux policy allowing apache and thelounge IRC
-module apache_custom 2.1;
+module apache_custom 2.2;
 
 require {
-        type initrc_t;
-        type node_t;
         type cslistener_port_t;
-        type usr_t;
-        type zero_device_t;
         type console_device_t;
         type device_t;
         type httpd_t;
-        type udevadm_t;
+	type httpd_log_t;
+        type initrc_t;
         type init_t;
         type nfs_t;
+        type node_t;
 	type run_init_t;
-	type security_t;
-	type sysctl_kernel_t;
 	type rpcd_t;
-
+	type security_t;
 	type sysadm_t;
-	type httpd_log_t;
+	type sysctl_kernel_t;
+        type udevadm_t;
+        type usr_t;
+        type zero_device_t;
 
-        class tcp_socket {node_bind name_bind};
-        class process {execmem};
-        class file {watch write execute map execute_no_trans create unlink};
-        class chr_file {map read write open};
-        class fd {use};
-        class dir {create write add_name remove_name search};
 	class capability {dac_read_search};
+        class chr_file {map read write open};
+        class dir {create write add_name remove_name search};
+        class file {create execute execute_no_trans map open unlink watch write};
+        class fd {use};
+        class process {execmem};
+        class tcp_socket {node_bind name_bind};
 }
 
 
@@ -51,3 +50,6 @@ allow httpd_t nfs_t:file {create write unlink};
 
 #watch log
 allow sysadm_t httpd_log_t:file {watch};
+
+#let apache read modsecurity config
+allow run_init_t etc_runtime_t:file {open};
