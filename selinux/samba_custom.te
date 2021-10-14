@@ -1,4 +1,4 @@
-module samba_custom 1.7;
+module samba_custom 1.8;
 #policy for smb AD DS server
 
 require {
@@ -6,8 +6,10 @@ require {
 	type device_t;
 	type dns_port_t;
 	type dosfs_t;
-	type etc_t;	
+	type etc_t;
+	type etc_runtime_t;
 	type epmap_port_t;
+	type init_t;
 	type initrc_t;
 	type initrc_state_t;
 	type kerberos_admin_port_t;
@@ -25,6 +27,7 @@ require {
 	type rpc_pipefs_t;
 	type rpcbind_t;
 	type rpcd_t;
+	type run_init_t;
 	type samba_etc_t;
 	type samba_log_t;
 	type samba_runtime_t;
@@ -32,6 +35,7 @@ require {
 	type security_t;
 	type semanage_t;
 	type sysadm_t;
+	type sysctl_kernel_t;
 	type system_dbusd_t;
 	type systemd_hwdb_t;
 	type udev_t;
@@ -103,6 +107,9 @@ allow nfsd_t unlabeled_t:dir {getattr search};
 allow mount_t dosfs_t:filesystem {getattr};
 allow rpcd_t rpc_pipefs_t:dir {watch};
 allow rpcd_t self:capability {dac_read_search};
+allow run_init_t etc_runtime_t:file {open};
+allow run_init_t init_t:file {open};
+allow run_init_t sysctl_kernel_t:file {read};
 allow semanage_t public_content_rw_t:dir {search};
 allow smbd_t kernel_t:system {module_request};
 allow smbd_t public_content_rw_t:dir {watch};
