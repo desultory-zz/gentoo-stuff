@@ -1,4 +1,4 @@
-module net_mounts_custom 2.0;
+module net_mounts_custom 2.2;
 #polciy for BASIC nfs and samba mount support
 
 require {
@@ -13,6 +13,7 @@ require {
 
 	class dir {add_name create remove_name rmdir watch write};
 	class file {getattr open read rename unlink};
+	class key {read setattr view write};
 	class sock_file {write};
 	class unix_stream_socket {connectto getattr};
 }
@@ -21,5 +22,6 @@ allow initrc_t nfs_t:dir {add_name create remove_name rmdir watch write};
 allow initrc_t rpcbind_t:unix_stream_socket {getattr};
 allow initrc_t nfs_t:file {open read rename unlink};
 allow kernel_t rpcbind_t:unix_stream_socket {connectto};
+allow kernel_t self:key {read setattr view write};
 allow mount_t rpcbind_runtime_t:sock_file {write};
 allow rpcd_t rpc_pipefs_t:dir {watch};

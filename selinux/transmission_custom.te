@@ -15,9 +15,11 @@ require {
         class file {getattr open read rename create unlink write};
 	class system {module_request};
         class tcp_socket {node_bind name_bind};
+	class udp_socket {node_bind};
 }
 
 allow initrc_t node_t:tcp_socket {node_bind};
+allow initrc_t node_t:udp_socket {node_bind};
 allow initrc_t unreserved_port_t:tcp_socket {name_bind};
 allow initrc_t nfs_t:file {create open read rename unlink write};
 allow initrc_t nfs_t:dir {add_name create search remove_name rename rmdir write};
