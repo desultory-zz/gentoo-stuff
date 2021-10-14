@@ -39,7 +39,7 @@ require {
 	type winbind_t;
 
 	class capability {dac_read_search};
-	class dir {add_name create getattr rename remove_name rmdir search watch write};
+	class dir {add_name create getattr read rename remove_name rmdir search watch write};
 	class file {append create execute getattr ioctl lock map open read rename setattr unlink write};
 	class filesystem {getattr};
 	class lnk_file {read};	
