@@ -5,7 +5,7 @@ require {
 	type cgroup_t;
 	type http_port_t;
 	type httpd_t;
-	type httpd_runtime_d;
+	type httpd_runtime_t;
 	type init_t;
 	type initrc_state_t;
 	type nfs_t;
