@@ -37,7 +37,7 @@ require {
 	type var_log_t;
 	type var_spool_t;
 
-	class capability {dac_read_search};
+	class capability {dac_read_search sys_tty_config};
 	class chr_file {getattr open read setattr write};
 	class dir {mounton search watch write};
 	class file {getattr lock map open read write};
@@ -54,6 +54,7 @@ allow auditctl_t proc_t:filesystem {getattr};
 allow auditd_t audisp_remote_exec_t:file {getattr};
 allow dmesg_t etc_t: file {getattr open read};
 allow getty_t var_lib_t:dir {search};
+allow getty_t var_log_t:file {lock open write};
 allow hwclock_t proc_t:filesystem {getattr};
 allow initrc_t auditd_t:netlink_audit_socket {getattr};
 allow initrc_t auditd_t:unix_stream_socket {getattr};
@@ -72,6 +73,7 @@ allow semanage_t proc_t:filesystem {getattr};
 allow setfiles_t proc_t:filesystem {getattr};
 allow setfiles_t sysctl_kernel_t:file {open read};
 allow tmpfiles_t device_t:chr_file {setattr};
+allow tmpfiles_t self:capability {sys_tty_config};
 allow tmpfiles_t sysctl_kernel_t:dir {search};
 allow tmpfiles_t sysctl_kernel_t:file {open read};
 allow udev_t portage_tmp_t:lnk_file {read};
