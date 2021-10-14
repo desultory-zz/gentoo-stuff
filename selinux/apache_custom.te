@@ -24,7 +24,7 @@ require {
 	class capability {dac_read_search};
         class chr_file {map read write open};
         class dir {create write add_name remove_name search};
-        class file {create execute execute_no_trans map open unlink watch write};
+        class file {create execute execute_no_trans getattr map open unlink watch write};
         class fd {use};
         class process {execmem};
         class tcp_socket {node_bind name_bind};
@@ -53,4 +53,4 @@ allow httpd_t nfs_t:file {create write unlink};
 allow sysadm_t httpd_log_t:file {watch};
 
 #let apache read modsecurity config
-allow run_init_t etc_runtime_t:file {open};
+allow run_init_t etc_runtime_t:file {getattr open};
