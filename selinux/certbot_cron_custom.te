@@ -17,7 +17,7 @@ require {
 	type sysctl_kernel_t;
 	type system_cronjob_t;
 	type system_mail_t;
-	type usr_tmp_t;
+	type user_tmp_t;
 	type var_spool_t;
 
 	class dir {add_name create relabelfrom relabelto remove_name rmdir write};
