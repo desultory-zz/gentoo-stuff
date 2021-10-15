@@ -1,5 +1,5 @@
 #selinux policy allowing apache and thelounge IRC
-module apache_custom 2.2;
+module apache_custom 2.3;
 
 require {
         type cslistener_port_t;
@@ -19,6 +19,7 @@ require {
 	type sysctl_kernel_t;
         type udevadm_t;
         type usr_t;
+	type var_lib_t;
         type zero_device_t;
 
 	class capability {dac_read_search};
@@ -39,7 +40,7 @@ allow httpd_t zero_device_t:chr_file {map};
 allow udevadm_t console_device_t:chr_file {read write};
 allow udevadm_t init_t:fd {use};
 allow httpd_t device_t:chr_file {read open};
-
+allow httpd_t var_lib_t:file {write};
 allow run_init_t init_t:dir {search};
 allow run_init_t security_t:file {map};
 allow run_init_t sysctl_kernel_t:dir {search};
