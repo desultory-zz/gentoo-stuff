@@ -8,6 +8,7 @@ require {
 	type httpd_runtime_t;
 	type init_t;
 	type initrc_state_t;
+	type kernel_t;
 	type nfs_t;
 	type user_home_t; #for the local bin
 	type proc_t;
@@ -21,10 +22,11 @@ require {
 	type var_spool_t;
 
 	class dir {add_name create relabelfrom relabelto remove_name rmdir write};
-	class fifo_file {open unlink write};
+	class fifo_file {open read unlink write};
 	class file {create execute execute_no_trans getattr ioctl map open read relabelfrom rename setattr unlink};
 	class filesystem {getattr};
 	class process {setcap signal signull};
+	class system {module_request};
 	class tcp_socket {name_connect};
 }
 
@@ -38,9 +40,14 @@ allow staff_t httpd_t:process {signal signull};
 allow staff_t user_tmp_t:file {relabelfrom};
 allow sysadm_sudo_t proc_t:filesystem {getattr};
 allow system_cronjob_t http_port_t:tcp_socket {name_connect};
+allow system_cronjob_t httpd_runtime_t:file {open read};
+allow system_cronjob_t httpd_t:process {signull};
+allow system_cronjob_t initrc_state_t:file {open read};
+allow system_cronjob_t kernel_t:system {module_request};
 allow system_cronjob_t nfs_t:dir {add_name create remove_name rmdir write};
 allow system_cronjob_t nfs_t:file {create execute execute_no_trans rename setattr unlink};
 allow system_cronjob_t self:process {setcap};
 allow system_cronjob_t user_home_t:file {execute execute_no_trans ioctl map open read};
 allow system_mail_t var_spool_t:fifo_file {open write};
 allow system_mail_t var_spool_t:file {unlink};
+allow tmpfiles_t crond_t:fifo_file {read write};
