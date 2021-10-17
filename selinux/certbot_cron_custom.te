@@ -3,6 +3,7 @@ module certbot_cron_custom 2.5;
 
 require {
 	type cgroup_t;
+	type crond_t;
 	type http_port_t;
 	type httpd_t;
 	type httpd_runtime_t;
