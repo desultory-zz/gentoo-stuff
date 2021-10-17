@@ -18,6 +18,7 @@ require {
 	type sysctl_kernel_t;
 	type system_cronjob_t;
 	type system_mail_t;
+	type tmpfiles_t;
 	type user_tmp_t;
 	type var_spool_t;
 
