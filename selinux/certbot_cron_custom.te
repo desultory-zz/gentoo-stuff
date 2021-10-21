@@ -1,4 +1,4 @@
-module certbot_cron_custom 2.5;
+module certbot_cron_custom 2.6;
 #module to allow for certbot to run in a nfs share from the cron folders
 
 require {
@@ -8,6 +8,7 @@ require {
 	type httpd_t;
 	type httpd_runtime_t;
 	type init_t;
+	type initrc_t;
 	type initrc_state_t;
 	type kernel_t;
 	type nfs_t;
@@ -18,6 +19,7 @@ require {
 	type sysadm_sudo_t;
 	type sysctl_kernel_t;
 	type system_cronjob_t;
+	type system_cronjob_tmp_t;
 	type system_mail_t;
 	type tmpfiles_t;
 	type user_tmp_t;
@@ -32,6 +34,8 @@ require {
 	class tcp_socket {name_connect};
 }
 
+allow httpd_t system_cronjob_tmp_t:file {read write};
+allow initrc_t system_cronjob_tmp_t:file {ioctl read write};
 allow run_init_t init_t:file {getattr open};
 allow run_init_t initrc_state_t:file {getattr open read};
 allow run_init_t proc_t:filesystem {getattr};
