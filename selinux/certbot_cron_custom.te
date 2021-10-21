@@ -27,7 +27,7 @@ require {
 
 	class dir {add_name create relabelfrom relabelto remove_name rmdir write};
 	class fifo_file {open read unlink write};
-	class file {create execute execute_no_trans getattr ioctl map open read relabelfrom rename setattr unlink};
+	class file {create execute execute_no_trans getattr ioctl map open read relabelfrom rename setattr unlink write};
 	class filesystem {getattr};
 	class process {setcap signal signull};
 	class system {module_request};
