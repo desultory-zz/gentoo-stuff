@@ -1,33 +1,35 @@
-module dns_cron 2.0;
+module dns_cron 2.1;
 #selinux policy for cron job to reload adblock zones
 
 require {
-	type system_cronjob_t;
 	type dnssec_t;
 	type http_port_t;
 	type kernel_t;
 	type named_zone_t;
 	type node_t;
 	type rndc_port_t;
+	type system_cronjob_t;
+	type system_mail_t;
 	type user_home_t;
 	type var_spool_t;
-	type system_mail_t;
+	type xdg_data_t;
 
-	class file {append create ioctl open read rename setattr unlink write};
-	class tcp_socket {name_connect node_bind};
-	class system {module_request};
 	class dir {add_name remove_name write};
-	class lnk_file {read};
 	class fifo_file {open write};
+	class file {append create ioctl open read rename setattr unlink write};
+	class lnk_file {read};
+	class system {module_request};
+	class tcp_socket {name_connect node_bind};
 }
 
-allow system_cronjob_t dnssec_t:file { open read };
-allow system_cronjob_t http_port_t:tcp_socket name_connect;
-allow system_cronjob_t kernel_t:system module_request;
-allow system_cronjob_t named_zone_t:dir { add_name remove_name write };
-allow system_cronjob_t named_zone_t:file { append create ioctl open read rename setattr unlink write };
-allow system_cronjob_t named_zone_t:lnk_file read;
-allow system_cronjob_t node_t:tcp_socket node_bind;
-allow system_cronjob_t rndc_port_t:tcp_socket name_connect;
-allow system_cronjob_t user_home_t:file { ioctl open read };
-allow system_mail_t var_spool_t:fifo_file { open write };
+allow system_cronjob_t dnssec_t:file {open read};
+allow system_cronjob_t http_port_t:tcp_socket {name_connect};
+allow system_cronjob_t kernel_t:system {module_request};
+allow system_cronjob_t named_zone_t:dir {add_name remove_name write};
+allow system_cronjob_t named_zone_t:file {append create ioctl open read rename setattr unlink write};
+allow system_cronjob_t named_zone_t:lnk_file {read};
+allow system_cronjob_t node_t:tcp_socket {node_bind};
+allow system_cronjob_t rndc_port_t:tcp_socket {name_connect};
+allow system_cronjob_t user_home_t:file {ioctl open read};
+allow system_cronjob_t xdg_data_t:file {ioctl open read};
+allow system_mail_t var_spool_t:fifo_file {open write};
