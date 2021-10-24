@@ -16,7 +16,7 @@ require {
 
 	class capability {dac_read_search};
 	class dir {search};
-	class file {getattr open read};
+	class file {append getattr open read};
 	class filesystem {getattr};
 	class udp_socket {node_bind};
 	class tcp_socket {node_bind};
