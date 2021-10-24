@@ -5,6 +5,7 @@ require {
 	type init_t;
 	type initrc_t;
 	type initrc_state_t;
+	type named_t;
 	type node_t;
 	type proc_t;
 	type run_init_t;
