@@ -12,6 +12,7 @@ require {
 	type sysadm_t;
 	type sysctl_kernel_t;
 	type tmpfiles_t;
+	type var_log_t;
 
 	class capability {dac_read_search};
 	class dir {search};
