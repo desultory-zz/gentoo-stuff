@@ -1,10 +1,11 @@
-module dhcp_client_custom 1.3;
+module dhcp_client_custom 1.4;
 #policy for dhcp client
 
 require {
 	type dhcpc_t;
 	type dhcpc_script_t;
 	type initrc_t;
+	type initrc_state_t;
 	type nsfs_t;
 	type portage_tmp_t;
 	type proc_t;
@@ -31,6 +32,7 @@ allow dhcpc_t nsfs_t:file {getattr};
 allow dhcpc_t portage_tmp_t:lnk_file {read};
 allow dhcpc_t self:capability {chown};
 allow dhcpc_script_t dhcpc_t:unix_dgram_socket {ioctl read write};
+allow dhcpc_script_t initrc_state_t:dir {search}
 allow dhcpc_script_t portage_tmp_t:lnk_file {read};
 allow dhcpc_script_t sysctl_kernel_t:dir {search};
 allow dhcpc_script_t sysctl_kernel_t:file {ioctl open read};
