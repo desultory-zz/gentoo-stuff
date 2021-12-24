@@ -17,7 +17,7 @@ require {
 	
 	class capability {chown};
 	class dir {search};
-	class file {getattr ioctl open read};
+	class file {execute getattr ioctl open read};
 	class filesystem {getattr};
 	class lnk_file {read};
 	class netlink_generic_socket {getattr};
