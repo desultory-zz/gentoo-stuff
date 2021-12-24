@@ -15,7 +15,7 @@ require {
 	type initrc_tmp_t;
 	type kernel_t;
 	type kmod_t;
-	type kmod_tmpfiles_conf_t
+	type kmod_tmpfiles_conf_t;
 	type local_login_t;
 	type logrotate_t;
 	type lvm_t;
