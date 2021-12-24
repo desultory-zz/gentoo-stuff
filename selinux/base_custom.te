@@ -88,7 +88,7 @@ allow udev_t portage_tmp_t:lnk_file {read};
 allow udev_t udev_rules_t:dir {watch};
 allow udev_t udev_runtime_t:dir {watch};
 allow udev_t security_t:file {map};
-allow udev_t systemd_hwdb_t file {open};
+allow udev_t systemd_hwdb_t:file {open};
 
 
 #backround
