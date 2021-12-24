@@ -80,7 +80,7 @@ allow setfiles_t proc_t:filesystem {getattr};
 allow setfiles_t sysctl_kernel_t:file {open read};
 allow systemd_tmpfiles_t self:capability {sys_resource};
 allow systemd_tmpfiles_t self:process {setrlimit};
-allow systemd_tmpfiles_t kmod_tmpfiles_conf_t:file {open read};
+allow systemd_tmpfiles_t kmod_tmpfiles_conf_t:file {ioctl open read};
 allow tmpfiles_t device_t:chr_file {setattr};
 allow tmpfiles_t self:capability {sys_tty_config};
 allow tmpfiles_t sysctl_kernel_t:dir {search};
@@ -89,7 +89,7 @@ allow udev_t portage_tmp_t:lnk_file {read};
 allow udev_t udev_rules_t:dir {watch};
 allow udev_t udev_runtime_t:dir {watch};
 allow udev_t security_t:file {map};
-allow udev_t systemd_hwdb_t:file {open};
+allow udev_t systemd_hwdb_t:file {map open};
 
 
 #backround
