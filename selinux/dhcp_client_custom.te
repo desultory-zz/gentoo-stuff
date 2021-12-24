@@ -7,6 +7,7 @@ require {
 	type initrc_t;
 	type initrc_state_t;
 	type nsfs_t;
+	type ntpd_initrc_exec_t;
 	type portage_tmp_t;
 	type proc_t;
 	type resolvconf_t;
@@ -32,7 +33,8 @@ allow dhcpc_t nsfs_t:file {getattr};
 allow dhcpc_t portage_tmp_t:lnk_file {read};
 allow dhcpc_t self:capability {chown};
 allow dhcpc_script_t dhcpc_t:unix_dgram_socket {ioctl read write};
-allow dhcpc_script_t initrc_state_t:dir {search}
+allow dhcpc_script_t initrc_state_t:dir {search};
+allow dhcpc_script_t ntpd_initrc_exec_t:file {execute};
 allow dhcpc_script_t portage_tmp_t:lnk_file {read};
 allow dhcpc_script_t sysctl_kernel_t:dir {search};
 allow dhcpc_script_t sysctl_kernel_t:file {ioctl open read};
