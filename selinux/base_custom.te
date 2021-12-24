@@ -41,7 +41,7 @@ require {
 	type var_log_t;
 	type var_spool_t;
 
-	class capability {dac_read_search setrlimit sys_resource sys_tty_config};
+	class capability {dac_read_search sys_resource sys_tty_config};
 	class chr_file {getattr open read setattr write};
 	class dir {add_name create mounton read remove_name search setattr watch write};
 	class fifo_file {open write};
@@ -50,7 +50,7 @@ require {
 	class lnk_file {create read rename unlink};
 	class netlink_audit_socket {getattr};
 	class netlink_kobject_uevent_socket {getattr};
-	class process {getcap};
+	class process {getcap setrlimit};
 	class unix_stream_socket {getattr};
 }
 
@@ -78,7 +78,8 @@ allow semanage_t proc_t: file {getattr};
 allow semanage_t proc_t:filesystem {getattr};
 allow setfiles_t proc_t:filesystem {getattr};
 allow setfiles_t sysctl_kernel_t:file {open read};
-allow systemd_tmpfiles_t self:capability {setrlimit sys_resource};
+allow systemd_tmpfiles_t self:capability {sys_resource};
+allow systemd_tmpfiles_t self:process {setrlimit};
 allow systemd_tmpfiles_t kmod_tmpfiles_conf_t:file {open read};
 allow tmpfiles_t device_t:chr_file {setattr};
 allow tmpfiles_t self:capability {sys_tty_config};
