@@ -30,6 +30,7 @@ require {
 	type sysctl_kernel_t;
 	type system_cronjob_t;
 	type system_cronjob_tmp_t;
+	type system_hwdb_t;
 	type system_mail_t;
 	type systemd_tmpfiles_t;
 	type tmpfiles_t;
@@ -40,7 +41,7 @@ require {
 	type var_log_t;
 	type var_spool_t;
 
-	class capability {dac_read_search sys_resource sys_tty_config};
+	class capability {dac_read_search setrlimit sys_resource sys_tty_config};
 	class chr_file {getattr open read setattr write};
 	class dir {add_name create mounton read remove_name search setattr watch write};
 	class fifo_file {open write};
@@ -71,14 +72,14 @@ allow kernel_t portage_tmp_t:lnk_file {read};
 allow kmod_t initrc_tmp_t:file {open read};
 allow kmod_t device_t:chr_file {getattr open read write};
 allow local_login_t var_log_t:file {lock open};
-allow lvm_t device_t:chr_file {read write};
+allow lvm_t device_t:chr_file {open read write};
 allow mount_t initrc_tmp_t: dir {mounton};
 allow semanage_t proc_t: file {getattr};
 allow semanage_t proc_t:filesystem {getattr};
 allow setfiles_t proc_t:filesystem {getattr};
 allow setfiles_t sysctl_kernel_t:file {open read};
-allow systemd_tmpfiles_t self:capability {sys_resource};
-allow systemd_tmpfiles_t kmod_tmpfiles_conf_t:file {read};
+allow systemd_tmpfiles_t self:capability {setrlimit sys_resource};
+allow systemd_tmpfiles_t kmod_tmpfiles_conf_t:file {open read};
 allow tmpfiles_t device_t:chr_file {setattr};
 allow tmpfiles_t self:capability {sys_tty_config};
 allow tmpfiles_t sysctl_kernel_t:dir {search};
@@ -87,6 +88,7 @@ allow udev_t portage_tmp_t:lnk_file {read};
 allow udev_t udev_rules_t:dir {watch};
 allow udev_t udev_runtime_t:dir {watch};
 allow udev_t security_t:file {map};
+allow udev_t system_hwdb_t file {open};
 
 
 #backround
