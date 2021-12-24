@@ -103,5 +103,5 @@ allow system_mail_t self:capability {dac_read_search};
 allow system_mail_t var_spool_t:dir {add_name read remove_name write};
 allow system_mail_t var_spool_t:fifo_file {open write};
 allow system_mail_t var_spool_t:file {create link open read unlink write};
-allow systemd_tmpfiles_t:self:capability {sys_resource};
-allow systemd_tmpfiles_t:kmod_tmpfiles_conf_t:file {read};
+allow systemd_tmpfiles_t self:capability {sys_resource};
+allow systemd_tmpfiles_t kmod_tmpfiles_conf_t:file {read};
